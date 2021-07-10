@@ -67,16 +67,16 @@ int main()
 Note that the API uses opaque types for (nearly) all the primary structures to ensure encapsulation, such as `EZSprite`, or `EZTexture`, besides the main application struct which is `EZApplication`. Therefore, instead of directly accessing members of structs, use getters instead, vice versa for setters.
 
 To see an example usage which demonstrates how this API works, see [this](https://github.com/ehurturk/Easy2DSandbox.git) sandbox repo or [this]() documentation.
-##Dependencies
+## Dependencies
 The library depends on the following:
 - OpenGL/GLAD - As the rendering backend (though Vulkan must be implemented, *in the future*, to be efficient). GPU must support at least OpenGL 3.3.
 - GLFW - As the window and input manager. 
 - stb - As for parsing image files.
 
-##Platforms
+## Platforms
 Note that this library is written using MacOS BigSur, so MacOS should probably work fine. I haven't tested this in Linux or Windows (Windows, oof) *yet*, but I will, probably as the library develops into a more sophisticated library.
 
-##Roadmap & TODO
+## Roadmap & TODO
 As of July 2021 the library has a long way to go.
 Version 1.0.0 includes the following:
 - Window Creation & Window Handling
