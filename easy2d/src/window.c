@@ -5,8 +5,13 @@
 #include "window.h"
 #include "log.h"
 
+struct EZWindow {
+    GLFWwindow *nativeWindow;
+    struct EZWindowConfig config; /* no need for a pointer - a basic struct which serves as a config */
+};
+
 void ezGLFWErrorCallback(int code, const char *error) {
-    EZ_DEBUGCF_RAW(EZ_ANSI_COLOR_RED "[GLFW ERROR:%i]: %s", code, error);
+    EZ_ERRORF_RAW("[GLFW ERROR:%i]: %s", code, error);
 }
 
 void ezFrameBufferSizeCallback(GLFWwindow *window, int w, int h) {
@@ -25,7 +30,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
 
     GLFWwindow *window = glfwCreateWindow(config.width, config.height, config.title, NULL, NULL);
     if (window == NULL) {
-        EZ_DEBUGC_RAW(EZ_ANSI_COLOR_RED "[GLFW ERROR]: Could not initialize the window.\n");
+        EZ_ERROR_RAW("[GLFW ERROR]: Could not initialize the window.\n");
         glfwTerminate();
         return NULL;
     }
@@ -33,7 +38,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        EZ_DEBUGC_RAW(EZ_ANSI_COLOR_RED "[GLAD ERROR]: Could not initialize glad.\n");
+        EZ_ERROR_RAW("[GLAD ERROR]: Could not initialize glad.\n");
         return NULL;
     }
 
@@ -61,7 +66,7 @@ struct EZWindow *ezCreateWindow(const char *title, int width, int height) {
 
     GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (window == NULL) {
-        EZ_DEBUGC_RAW(EZ_ANSI_COLOR_RED "[GLFW ERROR]: Could not initialize the window.\n");
+        EZ_ERROR_RAW("[GLFW ERROR]: Could not initialize the window.\n");
         glfwTerminate();
         return NULL;
     }
@@ -69,7 +74,7 @@ struct EZWindow *ezCreateWindow(const char *title, int width, int height) {
     glfwMakeContextCurrent(window);
 
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
-        EZ_DEBUGC_RAW(EZ_ANSI_COLOR_RED "[GLAD ERROR]: Could not initialize glad.\n");
+        EZ_ERROR_RAW("[GLAD ERROR]: Could not initialize glad.\n");
         return NULL;
     }
 

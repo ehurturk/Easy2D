@@ -3,6 +3,7 @@
 //
 
 #include "sprite.h"
+#include "util.h"
 
 #include <glad/glad.h>
 
@@ -19,6 +20,8 @@ struct EZSprite {
 
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout) {
+    ASSERT(vertices, "[EZ2D:ERROR]: Can't create a sprite with NULL vertices\n");
+    ASSERT(indices, "[EZ2D:ERROR]: Can't create a sprite with NULL indices\n");
     struct EZSprite *buff = malloc(sizeof(struct EZSprite));
     if (buff == NULL) {
         return NULL;

@@ -20,10 +20,7 @@ struct EZWindowConfig {
     int height;
 };
 
-struct EZWindow {
-    GLFWwindow *nativeWindow;
-    struct EZWindowConfig config; /* no need for a pointer - a basic struct which serves as a config */
-};
+typedef struct EZWindow EZWindow;
 
 struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config);
 struct EZWindow *ezCreateWindow(const char *title, int width, int height);

@@ -9,9 +9,32 @@
 extern "C" {
 #endif
 
+#include <stdarg.h>
+
+#define EZ_VERTEX_SHADER 0
+#define EZ_FRAGMENT_SHADER 1
+#define EZ_GEOMETRY_SHADER 2
+#define EZ_SHADER_PROGRAM 3
+
 typedef struct EZShader EZShader;
 
+struct EZShaderInfo {
+    int type;
+    const char *src;
+};
+
 unsigned int ezGetShaderProgramId(struct EZShader *shader);
+
+/* Sequential Way to Create Shader Pipeline (like a tunnel) */
+struct EZShader *ezSequentialShaderPipeline();
+void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src);
+void ezFinishShaderPipeline(struct EZShader *shader);
+
+/* Direct Way to Create Shader Pipeline */
+struct EZShader *ezDirectShaderPipeline(int n, ...); /* variadic of EZShaderInfo */
+
+/* Resource Deallocation */
+void ezReleaseShader(struct EZShader *shader);
 
 #ifdef __cplusplus
 }

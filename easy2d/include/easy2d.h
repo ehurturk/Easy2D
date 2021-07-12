@@ -27,5 +27,8 @@
 #include "sprite.h"
 #include "shader.h"
 #include "texture.h"
+#include "util.h"
+#include "renderer.h"
+#include "resource.h"
 
 #endif//EASY2D_H

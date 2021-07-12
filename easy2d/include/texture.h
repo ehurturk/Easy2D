@@ -11,6 +11,8 @@ extern "C" {
 
 typedef struct EZTexture EZTexture;
 
+struct EZTexture *ezLoadTexture(const char *file);
+
 #ifdef __cplusplus
 }
 #endif
