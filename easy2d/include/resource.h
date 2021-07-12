@@ -18,7 +18,7 @@ extern "C" {
 
 typedef struct EZResource EZResource;
 
-struct EZResource *ezLoadResource(const char *file, int *err);
+struct EZResource *ezLoadFile(const char *file, int *err);
 struct EZResource *ezLoadImage(const char *file, int *error);
 
 const char *ezGetResourceContent(struct EZResource *res);

@@ -13,7 +13,7 @@ struct EZResource {
     int length;
 };
 
-struct EZResource *ezLoadResource(const char *file, int *err) {
+struct EZResource *ezLoadFile(const char *file, int *err) {
     ASSERT(file, "Can't load a NULL resource file.\n");
     char *buffer;
     size_t length; /* bytes */
@@ -52,7 +52,7 @@ struct EZResource *ezLoadResource(const char *file, int *err) {
         *err = EZ_FILE_DOES_NOT_EXIST;
         return NULL;
     }
-
+    printf("%s\n", buffer);
     struct EZResource *res = malloc(sizeof(struct EZResource));
     res->data = buffer;
     res->size = read_length;
