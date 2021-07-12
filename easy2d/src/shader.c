@@ -74,14 +74,18 @@ struct EZShader *ezSequentialShaderPipeline() {
 
 /* sequentially add shaders to the shader pipeline */
 void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src) {
+    EZ_DEBUGC(EZ_COLOR_WHITE "WHAAAA\n");
     ASSERTF(src, "Could not add shader file located at %s location to the shader pipeline since it is NULL\n", src);
     ASSERT(shader, "Could not add shader to a NULL shader object\n");
-
+    EZ_DEBUGC(EZ_COLOR_WHITE "WHAAAA\n");
     int err;
     struct EZResource *res = ezLoadResource(src, &err);
-
+    EZ_DEBUGC(EZ_COLOR_GREEN "Passed loadResource without problem\n");
     ASSERTF(err, "[Easy2D:ERROR:%i] Could not add shader located at %s to the pipeline", err, src);
-
+    EZ_DEBUGC(EZ_COLOR_GREEN "Passed loadResource assertion without problem\n");
+    EZ_DEBUG("Data: \n");
+    EZ_DEBUGF("%s", ezGetResourceContent(res));
+    EZ_DEBUG("=======================\n");
     const char *source;
     switch (type) {
         case EZ_VERTEX_SHADER:
@@ -108,6 +112,7 @@ void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src) {
         default:
             break;
     }
+    EZ_DEBUG(EZ_COLOR_YELLOW "Passed the complex switch parttt\n");
     ezReleaseResource(res);
 }
 

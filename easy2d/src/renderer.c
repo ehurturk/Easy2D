@@ -12,3 +12,7 @@ void ezRenderSprite(const struct EZSprite *sprite) {
     glBindVertexArray(ezGetSpriteVAO(sprite));
     glDrawElements(GL_TRIANGLES, ezGetIndexCountOfSprite(sprite), GL_UNSIGNED_INT, 0);
 }
+
+void ezClearFrame() {
+    glClear(GL_COLOR_BUFFER_BIT);
+}

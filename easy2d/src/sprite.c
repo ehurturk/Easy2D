@@ -143,3 +143,9 @@ unsigned int ezGetIndexCountOfSprite(const struct EZSprite *sprite) {
 unsigned int ezGetVertexCountOfSprite(const struct EZSprite *sprite) {
     return sprite->vertexCount;
 }
+
+void ezReleaseSprite(struct EZSprite *sprite) {
+    ezReleaseShader(sprite->shader);
+    ezReleaseTexture(sprite->texture);
+    free(sprite);
+}

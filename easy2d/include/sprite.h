@@ -36,6 +36,8 @@ unsigned int ezGetSpriteVBO(const struct EZSprite *sprite);
 unsigned int ezGetIndexCountOfSprite(const struct EZSprite *sprite);
 unsigned int ezGetVertexCountOfSprite(const struct EZSprite *sprite);
 
+void ezReleaseSprite(struct EZSprite *sprite);
+
 #ifdef __cplusplus
 }
 #endif

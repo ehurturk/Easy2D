@@ -13,6 +13,8 @@ typedef struct EZTexture EZTexture;
 
 struct EZTexture *ezLoadTexture(const char *file);
 
+void ezReleaseTexture(struct EZTexture *tex);
+
 #ifdef __cplusplus
 }
 #endif

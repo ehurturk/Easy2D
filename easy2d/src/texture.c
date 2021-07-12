@@ -44,3 +44,7 @@ struct EZTexture *ezLoadTexture(const char *file) {
     ezReleaseResource(res);
     return tex;
 }
+
+void ezReleaseTexture(struct EZTexture *tex) {
+    free(tex);
+}

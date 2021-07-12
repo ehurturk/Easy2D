@@ -16,6 +16,7 @@ extern "C" {
 /* batch renderer struct could be useful in the future */
 
 void ezRenderSprite(const struct EZSprite *sprite);
+void ezClearFrame();
 
 #ifdef __cplusplus
 }
