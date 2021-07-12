@@ -52,7 +52,6 @@ struct EZResource *ezLoadFile(const char *file, int *err) {
         *err = EZ_FILE_DOES_NOT_EXIST;
         return NULL;
     }
-    printf("%s\n", buffer);
     struct EZResource *res = malloc(sizeof(struct EZResource));
     res->data = buffer;
     res->size = read_length;
@@ -105,7 +104,7 @@ int ezGetResourceLength(struct EZResource *res) {
 }
 
 void ezReleaseResource(struct EZResource *res) {
-
+    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a resource...\n");
     free(res->data); /* critical */
     res->size = 0;
     free(res);

@@ -145,6 +145,7 @@ unsigned int ezGetVertexCountOfSprite(const struct EZSprite *sprite) {
 }
 
 void ezReleaseSprite(struct EZSprite *sprite) {
+    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a sprite...\n");
     ezReleaseShader(sprite->shader);
     ezReleaseTexture(sprite->texture);
     free(sprite);

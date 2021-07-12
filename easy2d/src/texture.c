@@ -46,5 +46,6 @@ struct EZTexture *ezLoadTexture(const char *file) {
 }
 
 void ezReleaseTexture(struct EZTexture *tex) {
+    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a texture...\n");
     free(tex);
 }

@@ -152,4 +152,5 @@ void ezReleaseShader(struct EZShader *shader) {
     shader->fid = 0;
     shader->gid = 0;
     free(shader);
+    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a shader...\n");
 }
