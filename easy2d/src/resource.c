@@ -68,11 +68,13 @@ struct EZResource *ezLoadImage(const char *file, int *err) {
 
     int w, h, n_channels;
     unsigned char *data = stbi_load(file, &w, &h, &n_channels, 4);
+
     if (data == NULL) {
         *err = EZ_FILE_DOES_NOT_EXIST;
         stbi_image_free(data);
         return NULL;
     }
+    *err = EZ_FILE_OK;
     struct EZResource *res = malloc(sizeof(struct EZResource));
     res->data = (char *) data; /* TODO: Bug source? */
     res->size = w * h; /* in pixels, not bytes! */

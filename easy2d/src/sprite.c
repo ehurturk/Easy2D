@@ -7,14 +7,16 @@
 
 #include <glad/glad.h>
 
+
 struct EZSprite {
     unsigned int vao, vbo, ebo;
     unsigned int vertexCount, indexCount;
+    unsigned int texture_slots;
 
+    struct EZTexture **textures;
     /* Shader */
     struct EZShader *shader;
     /* Texture */
-    struct EZTexture *texture;
     /* transform */
 };
 
@@ -51,7 +53,12 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
     glBindVertexArray(0);
 
     buff->shader  = NULL;
-    buff->texture = NULL;
+    buff->texture_slots = 0;
+    int max_units;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_units);
+    buff->textures = malloc(max_units * sizeof(ezGetSizeofTexture()));
+    for (int i = 0; i < max_units; i++)
+        buff->textures[i] = NULL;
     return buff;
 }
 
@@ -90,9 +97,10 @@ struct EZSprite *ezSquareSprite() {
 
     buff->vertexCount = 4;
     buff->indexCount  = 6;
+    buff->texture_slots = 0;
 
     /* Position Data */
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, stride, (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, stride, (void *) 0);
     glEnableVertexAttribArray(0);
 
     /* UV Data */
@@ -104,8 +112,11 @@ struct EZSprite *ezSquareSprite() {
     glBindVertexArray(0);
 
     buff->shader  = NULL;
-    buff->texture = NULL;
-
+    int max_units;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_units);
+    buff->textures = malloc(sizeof(ezGetSizeofTexture()) * max_units);
+    for (int i = 0; i < max_units; i++)
+        buff->textures[i] = NULL;
     return buff;
 }
 
@@ -117,36 +128,60 @@ void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader) {
 }
 
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
-    sprite->texture = texture;
+    int max_units;
+    glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_units);
+    if (sprite->texture_slots <= max_units) {
+        sprite->textures[sprite->texture_slots] = texture;
+        sprite->texture_slots++;
+    }
+    else
+        EZ_ERROR_RAW("[EZ2D:ERROR]: Maximum number of textures is exceeded. Can't add more textures\n");
 }
 
-struct EZShader *ezGetShaderOfSpite(const struct EZSprite *sprite) {
+inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
     return sprite->shader;
 }
 
-struct EZTexture *ezGetTextureOfSprite(const struct EZSprite *sprite) {
-    return sprite->texture;
+inline unsigned int ezGetSpriteTextureIDAt(const struct EZSprite *sprite, int i) {
+    struct EZTexture *tex = sprite->textures[i];
+    unsigned int id = ezGetTextureId(tex);
+    return id;
 }
 
-unsigned int ezGetSpriteVAO(const struct EZSprite *sprite) {
+inline struct EZTexture **ezGetSpriteTextures(const struct EZSprite *sprite) {
+    return sprite->textures;
+}
+
+inline struct EZTexture *ezGetSpriteTextureAt(const struct EZSprite *sprite, int i) {
+    return sprite->textures[i];
+}
+
+inline unsigned int ezGetSpriteVAO(const struct EZSprite *sprite) {
     return sprite->vao;
 }
 
-unsigned int ezGetSpriteVBO(const struct EZSprite *sprite) {
+inline unsigned int ezGetSpriteVBO(const struct EZSprite *sprite) {
     return sprite->vbo;
 }
 
-unsigned int ezGetIndexCountOfSprite(const struct EZSprite *sprite) {
+inline unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite) {
     return sprite->indexCount;
 }
 
-unsigned int ezGetVertexCountOfSprite(const struct EZSprite *sprite) {
+inline unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite) {
     return sprite->vertexCount;
+}
+
+inline unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite) {
+    return sprite->texture_slots;
 }
 
 void ezReleaseSprite(struct EZSprite *sprite) {
     EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a sprite...\n");
     ezReleaseShader(sprite->shader);
-    ezReleaseTexture(sprite->texture);
+    if (sprite->textures != NULL) {
+        for (int i = 0; i < sprite->texture_slots; i++)
+            ezReleaseTexture(sprite->textures[i]);
+    }
     free(sprite);
 }

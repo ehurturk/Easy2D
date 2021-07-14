@@ -45,6 +45,16 @@ struct EZTexture *ezLoadTexture(const char *file) {
     return tex;
 }
 
+unsigned int ezGetTextureId(const struct EZTexture *tex) {
+    unsigned int id = tex->texid; /* error is here - tex is NULL - FIXME: Tex is null. */
+    return id;
+}
+
+
+size_t ezGetSizeofTexture() {
+    return sizeof(struct EZTexture);
+}
+
 void ezReleaseTexture(struct EZTexture *tex) {
     EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a texture...\n");
     free(tex);

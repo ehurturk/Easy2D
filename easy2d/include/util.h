@@ -15,7 +15,7 @@ extern "C" {
 #define ASSERTF(x, msg, ...)                                   \
     do {                                                      \
         if (!(x)) {                                           \
-            EZ_ERRORF_RAW("[EZ2D:ERROR]: " msg, __VA_ARGS__); \
+            EZ_ERRORF_RAW(msg, __VA_ARGS__); \
             assert(x);                                        \
         }                                                     \
     } while (0)
@@ -23,7 +23,7 @@ extern "C" {
 #define ASSERT(x, msg)                                   \
     do {                                                      \
         if (!(x)) {                                           \
-            EZ_ERROR_RAW("[EZ2D:ERROR]: " msg); \
+            EZ_ERROR_RAW(msg); \
             assert(x);                                        \
         }                                                     \
     } while (0)

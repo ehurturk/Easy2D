@@ -5,14 +5,19 @@
 #ifndef EASY2D_TEXTURE_H
 #define EASY2D_TEXTURE_H
 
+#include <stdlib.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif
+
 
 typedef struct EZTexture EZTexture;
 
 struct EZTexture *ezLoadTexture(const char *file);
 
+unsigned int ezGetTextureId(const struct EZTexture *tex);
+size_t ezGetSizeofTexture();
 void ezReleaseTexture(struct EZTexture *tex);
 
 #ifdef __cplusplus

@@ -29,12 +29,15 @@ void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader);
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
-struct EZShader *ezGetShaderOfSpite(const struct EZSprite *sprite);
-struct EZTexture *ezGetTextureOfSprite(const struct EZSprite *sprite);
+struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);
+struct EZTexture **ezGetSpriteTextures(const struct EZSprite *sprite);
+struct EZTexture *ezGetSpriteTextureAt(const struct EZSprite *sprite, int i);
+unsigned int ezGetSpriteTextureIDAt(const struct EZSprite *sprite, int i);
 unsigned int ezGetSpriteVAO(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVBO(const struct EZSprite *sprite);
-unsigned int ezGetIndexCountOfSprite(const struct EZSprite *sprite);
-unsigned int ezGetVertexCountOfSprite(const struct EZSprite *sprite);
+unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite);
+unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite);
+unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite);
 
 void ezReleaseSprite(struct EZSprite *sprite);
 

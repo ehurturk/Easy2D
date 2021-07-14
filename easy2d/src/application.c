@@ -55,7 +55,7 @@ void ezStart() {
 
     app->init();
     EZ_DEBUGC_RAW(EZ_COLOR_BOLD_BLUE "[Easy2D]: " EZ_COLOR_GREEN
-                                                  "App has been successfully started up.\n");
+                                                  "App has been successfully started up.\n" EZ_COLOR_RESET);
     app->update(); /* while loop in this function */
     app->destroy();
 }

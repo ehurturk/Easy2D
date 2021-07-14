@@ -59,6 +59,7 @@ void ezValidateShaderPipeline(unsigned int shader, int type) {
 }
 
 unsigned int ezGetShaderProgramId(struct EZShader *shader) {
+    ASSERT(shader, "[EZ2D:ERROR]: Shader is NULL, can't get program id of a NULL shader\n");
     return shader->prgid;
 }
 
