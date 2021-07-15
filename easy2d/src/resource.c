@@ -76,7 +76,7 @@ struct EZResource *ezLoadImage(const char *file, int *err) {
     }
     *err = EZ_FILE_OK;
     struct EZResource *res = malloc(sizeof(struct EZResource));
-    res->data = (char *) data; /* TODO: Bug source? */
+    res->data = data;
     res->size = w * h; /* in pixels, not bytes! */
     /*
      * IMPORTANT NOTICE HERE:

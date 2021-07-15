@@ -33,9 +33,8 @@ struct EZTexture *ezLoadTexture(const char *file) {
     ASSERTF(!err, "[EZ2D:ERROR]: Image file located at %s doesn't exist\n", file);
     const char *data = ezGetResourceContent(res);
 
-    int w = ezGetResourceSize(res);
-    int h = ezGetResourceLength(res) / w; /* awkward, but I couldn't come up with any better solution yet */
-
+    int w = ezGetResourceLength(res); /* FIXME HERE IS THE PROBLEM! */
+    int h = (int)ezGetResourceSize(res) / w; /* awkward, but I couldn't come up with any better solution yet */
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
     glGenerateMipmap(GL_TEXTURE_2D);
 

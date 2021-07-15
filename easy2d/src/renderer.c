@@ -12,8 +12,6 @@ void ezRenderSprite(const struct EZSprite *sprite) {
     struct EZShader *shader = ezGetSpriteShader(sprite); /* null shader */
     unsigned int prid = ezGetShaderProgramId(shader);
     glUseProgram(prid);
-    glBindVertexArray(ezGetSpriteVAO(sprite));
-
     /* Textures aren't necessary, however shaders are. */
     if (ezGetSpriteTextures(sprite) != NULL) {
         for (int i = 0; i < ezGetSpriteTextureSlots(sprite); i++) {
@@ -22,7 +20,7 @@ void ezRenderSprite(const struct EZSprite *sprite) {
             glBindTexture(GL_TEXTURE_2D, ezGetSpriteTextureIDAt(sprite, i));
         }
     }
-
+    glBindVertexArray(ezGetSpriteVAO(sprite));
     glDrawElements(GL_TRIANGLES, ezGetSpriteIndexCount(sprite), GL_UNSIGNED_INT, 0);
 }
 

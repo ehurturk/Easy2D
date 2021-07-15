@@ -13,11 +13,10 @@ Texture:
     - Load Textures - OK (not tested yet)
     - Initial texture is default white => could be achieved?
     - Parse texture atlas -
-    - multiple active texture slots. => could be a sum, i.e. :
-        int texture_slot_sum;
-        for (int i = 0; i < t_sum; i++) {
-            glActiveTexture(GL_TEXTURE0 + i);
-        }
+    - multiple active texture slots. => OK
+    - ERROR WHEN DISPLAY !! Find it.
+        - CAUSE: Width and height of resource loading. Find a solution.Width becomes 50325 (w * h), h is OK btw. Must be 305 165
+        SO, TODO is to be able to extracr both w and h from an image while keeping the file format too. (maybe hints as params? e.g. ezLoadResource(EZ_TEX, ...) or ezLoadResource(EZ_FILE, ...))
 
 Renderer:
     - Implement batch rendering
