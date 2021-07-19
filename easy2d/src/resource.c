@@ -106,7 +106,7 @@ int ezGetResourceLength(struct EZResource *res) {
 }
 
 void ezReleaseResource(struct EZResource *res) {
-    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a resource...\n");
+    EZ_DEBUGC_RAW(EZ_COLOR_YELLOW "Releasing a resource...\n");
     free(res->data); /* critical */
     res->size = 0;
     free(res);

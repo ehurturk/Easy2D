@@ -9,9 +9,10 @@
 void ezRenderSprite(const struct EZSprite *sprite) {
     ASSERT(sprite, "[EZ2D:ERROR]: Can't render a sprite which is NULL\n");
 
-    struct EZShader *shader = ezGetSpriteShader(sprite); /* null shader */
+    struct EZShader *shader = ezGetSpriteShader(sprite);
     unsigned int prid = ezGetShaderProgramId(shader);
     glUseProgram(prid);
+
     /* Textures aren't necessary, however shaders are. */
     if (ezGetSpriteTextures(sprite) != NULL) {
         for (int i = 0; i < ezGetSpriteTextureSlots(sprite); i++) {

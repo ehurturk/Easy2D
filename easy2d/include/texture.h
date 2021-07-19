@@ -15,6 +15,7 @@ extern "C" {
 typedef struct EZTexture EZTexture;
 
 struct EZTexture *ezLoadTexture(const char *file);
+struct EZTexture *ezLoadTextureFromSpritesheet(const char *file, int x, int y, int w, int h);
 
 unsigned int ezGetTextureId(const struct EZTexture *tex);
 size_t ezGetSizeofTexture();

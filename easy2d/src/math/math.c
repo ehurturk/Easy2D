@@ -1,3 +1,2 @@
-//
-// Created by Emir Hürtürk on 19.07.2021.
-//
+#define HANDMADE_MATH_IMPLEMENTATION
+#include "math/math.h"

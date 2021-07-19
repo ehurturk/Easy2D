@@ -23,7 +23,7 @@ struct VertexLayout {
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout);
 struct EZSprite *ezSquareSprite();
-struct EZSprite *ezCreateQuad(int width, int height);
+struct EZSprite *ezCreateQuad(int width, int height); /* will come with default shaders. */
 
 void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader);
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture);

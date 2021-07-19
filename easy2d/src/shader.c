@@ -77,9 +77,14 @@ struct EZShader *ezSequentialShaderPipeline() {
 void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src) {
     ASSERTF(src, "Could not add shader file located at %s location to the shader pipeline since it is NULL\n", src);
     ASSERT(shader, "Could not add shader to a NULL shader object\n");
-    int err;
-    struct EZResource *res = ezLoadFile(src, &err);
-    ASSERTF(!err, "(%i) Could not add shader located at %s to the pipeline\n", err, src);
+
+    struct EZResource *res = NULL;
+
+    if (type % 2 == 0) {
+        int err;
+        res = ezLoadFile(src, &err);
+        ASSERTF(!err, "(%i) Could not add shader located at %s to the pipeline\n", err, src);
+    }
     /* Verbose output.
         EZ_DEBUG("Data: \n");
         EZ_DEBUGF("%s\n", ezGetResourceContent(res));
@@ -94,10 +99,22 @@ void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src) {
             glCompileShader(shader->vid);
             ezValidateShaderPipeline(shader->vid, EZ_VERTEX_SHADER);
             break;
+        case EZ_VERTEX_SHADER_STR:
+            shader->vid = glCreateShader(GL_VERTEX_SHADER);
+            glShaderSource(shader->vid, 1, &src, NULL);
+            glCompileShader(shader->vid);
+            ezValidateShaderPipeline(shader->vid, EZ_VERTEX_SHADER);
+            break;
         case EZ_FRAGMENT_SHADER:
             shader->fid = glCreateShader(GL_FRAGMENT_SHADER);
             source      = ezGetResourceContent(res);
             glShaderSource(shader->fid, 1, &source, NULL);
+            glCompileShader(shader->fid);
+            ezValidateShaderPipeline(shader->fid, EZ_FRAGMENT_SHADER);
+            break;
+        case EZ_FRAGMENT_SHADER_STR:
+            shader->fid = glCreateShader(GL_FRAGMENT_SHADER);
+            glShaderSource(shader->fid, 1, &src, NULL);
             glCompileShader(shader->fid);
             ezValidateShaderPipeline(shader->fid, EZ_FRAGMENT_SHADER);
             break;
@@ -108,10 +125,16 @@ void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src) {
             glCompileShader(shader->gid);
             ezValidateShaderPipeline(shader->gid, EZ_GEOMETRY_SHADER);
             break;
+        case EZ_GEOMETRY_SHADER_STR:
+            shader->gid = glCreateShader(GL_GEOMETRY_SHADER);
+            glShaderSource(shader->gid, 1, &src, NULL);
+            glCompileShader(shader->gid);
+            ezValidateShaderPipeline(shader->gid, EZ_GEOMETRY_SHADER);
+            break;
         default:
             break;
     }
-    ezReleaseResource(res);
+    if (type % 2 == 0) ezReleaseResource(res);
 }
 
 /* finish up the shader pipeline by creating the shader program at last */

@@ -30,5 +30,6 @@
 #include "util.h"
 #include "renderer.h"
 #include "resource.h"
+#include "math/math.h"
 
 #endif//EASY2D_H

@@ -10,7 +10,7 @@ Resource:
     - Check -> PROBABLY
 
 Texture:
-    - Load Textures - OK (not tested yet)
+    - Load Textures - OK
     - Initial texture is default white => could be achieved?
     - Parse texture atlas -
     - multiple active texture slots. => OK
@@ -22,10 +22,16 @@ Renderer:
     - Implement batch rendering
     - Use global vao
     - struct EZBatchRenderer;
+    - Implement ortho projection.
 
 Sprite:
     - Release Sprite - OK
+    - Default shader -> e.x. ezCreateRawSprite() for non-shader version sprites.
     - ASSERTION!
+
+Math:
+    - Orthographic projection!!
+    - Compatible with GL?
 
 Log:
     - DEBUG_ENABLED doesn't work

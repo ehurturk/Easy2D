@@ -12,9 +12,12 @@ extern "C" {
 #include <stdarg.h>
 
 #define EZ_VERTEX_SHADER 0
-#define EZ_FRAGMENT_SHADER 1
-#define EZ_GEOMETRY_SHADER 2
-#define EZ_SHADER_PROGRAM 3
+#define EZ_VERTEX_SHADER_STR 1
+#define EZ_FRAGMENT_SHADER 2
+#define EZ_FRAGMENT_SHADER_STR 3
+#define EZ_GEOMETRY_SHADER 4
+#define EZ_GEOMETRY_SHADER_STR 5
+#define EZ_SHADER_PROGRAM 6
 
 typedef struct EZShader EZShader;
 

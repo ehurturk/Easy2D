@@ -44,6 +44,10 @@ struct EZTexture *ezLoadTexture(const char *file) {
     return tex;
 }
 
+struct EZTexture *ezLoadTextureFromSpritesheet(const char *file, int x, int y, int w, int h) {
+    
+}
+
 unsigned int ezGetTextureId(const struct EZTexture *tex) {
     unsigned int id = tex->texid; /* error is here - tex is NULL - FIXME: Tex is null. */
     return id;

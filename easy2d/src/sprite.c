@@ -62,6 +62,9 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
     return buff;
 }
 
+/*
+ * Create a new sprite containing the default shaders. (it will be a white square if no shaders are specified)
+*/
 struct EZSprite *ezSquareSprite() {
     float vertices[] = {
             /*   Position       UV */
@@ -111,7 +114,27 @@ struct EZSprite *ezSquareSprite() {
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    buff->shader  = NULL;
+    /* Create the default shader for the sprite */
+    struct EZShader *shader = ezSequentialShaderPipeline();
+
+    const char *default_vs = "#version 330 core\n"
+                             "layout (location = 0) in vec3 pos;\n"
+                             "layout (location = 1) in vec2 uv;\n"
+                             "void main() {\n"
+                             "    gl_Position = vec4(pos, 1.0f);\n"
+                             "}";
+
+    const char *default_fs = "#version 330 core\n"
+                             "out vec4 color;\n"
+                             "void main() {\n"
+                             "    color = vec4(0.4f, 0.3f, 0.2f, 1.0f);\n"
+                             "}";
+
+    ezAddToShaderPipeline(shader, EZ_VERTEX_SHADER_STR, default_vs);
+    ezAddToShaderPipeline(shader, EZ_FRAGMENT_SHADER_STR, default_fs);
+    ezFinishShaderPipeline(shader);
+
+    buff->shader  = shader;
     int max_units;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_units);
     buff->textures = malloc(sizeof(ezGetSizeofTexture()) * max_units);
