@@ -13,10 +13,12 @@
 extern "C" {
 #endif
 
+
 /* batch renderer struct could be useful in the future */
 
 void ezRenderSprite(const struct EZSprite *sprite);
 void ezClearFrame();
+void ezSetBackgroundColor(float r, float g, float b, float a);
 
 #ifdef __cplusplus
 }

@@ -35,6 +35,7 @@ struct EZTexture *ezGetSpriteTextureAt(const struct EZSprite *sprite, int i);
 unsigned int ezGetSpriteTextureIDAt(const struct EZSprite *sprite, int i);
 unsigned int ezGetSpriteVAO(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVBO(const struct EZSprite *sprite);
+unsigned int ezGetSpriteEBO(const struct EZSprite *sprite);
 unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite);

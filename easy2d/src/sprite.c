@@ -52,7 +52,26 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     glBindVertexArray(0);
 
-    buff->shader  = NULL;
+    struct EZShader *shader = ezSequentialShaderPipeline();
+
+    const char *default_vs = "#version 330 core\n"
+                             "layout (location = 0) in vec3 pos;\n"
+                             "layout (location = 1) in vec2 uv;\n"
+                             "void main() {\n"
+                             "    gl_Position = vec4(pos, 1.0f);\n"
+                             "}";
+
+    const char *default_fs = "#version 330 core\n"
+                             "out vec4 color;\n"
+                             "void main() {\n"
+                             "    color = vec4(1.0f, 1.0f, 1.0f, 1.0f);\n"
+                             "}";
+
+    ezAddToShaderPipeline(shader, EZ_VERTEX_SHADER_STR, default_vs);
+    ezAddToShaderPipeline(shader, EZ_FRAGMENT_SHADER_STR, default_fs);
+    ezFinishShaderPipeline(shader);
+
+    buff->shader  = shader;
     buff->texture_slots = 0;
     int max_units;
     glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_units);
@@ -68,11 +87,13 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
 struct EZSprite *ezSquareSprite() {
     float vertices[] = {
             /*   Position       UV */
-            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,// bottom left
-            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  // top right
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f  // top left
+            -10.5f, -10.5f, 0.0f, 0.0f, 0.0f,// bottom left
+            10.5f, -10.5f, 0.0f, 1.0f, 0.0f, // bottom right
+            10.5f, 10.5f, 0.0f, 1.0f, 1.0f,  // top right
+            -10.5f, 10.5f, 0.0f, 0.0f, 1.0f  // top left
     };
+
+
     unsigned int indices[] = {
             0, 1, 3,// first Triangle
             1, 2, 3 // second Triangle
@@ -120,14 +141,17 @@ struct EZSprite *ezSquareSprite() {
     const char *default_vs = "#version 330 core\n"
                              "layout (location = 0) in vec3 pos;\n"
                              "layout (location = 1) in vec2 uv;\n"
+                             "uniform mat4 ez_Model;\n"
+                             "uniform mat4 ez_Projection;\n"
+                             "uniform mat4 ez_View;\n"
                              "void main() {\n"
-                             "    gl_Position = vec4(pos, 1.0f);\n"
+                             "    gl_Position = ez_Projection * ez_View * ez_Model * vec4(pos, 1.0f);\n"
                              "}";
 
     const char *default_fs = "#version 330 core\n"
                              "out vec4 color;\n"
                              "void main() {\n"
-                             "    color = vec4(0.4f, 0.3f, 0.2f, 1.0f);\n"
+                             "    color = vec4(1.0f);\n"
                              "}";
 
     ezAddToShaderPipeline(shader, EZ_VERTEX_SHADER_STR, default_vs);
@@ -185,6 +209,10 @@ inline unsigned int ezGetSpriteVAO(const struct EZSprite *sprite) {
 
 inline unsigned int ezGetSpriteVBO(const struct EZSprite *sprite) {
     return sprite->vbo;
+}
+
+inline unsigned int ezGetSpriteEBO(const struct EZSprite *sprite) {
+    return sprite->ebo;
 }
 
 inline unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite) {

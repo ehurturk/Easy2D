@@ -2,31 +2,20 @@
 
 Now I have added ASSERT(), and ASSERTF(): use them - scan all the functions. == IMPORTANT!!
 
-Shader:
-    - Load & parse shaders. -> OK
-    - Free() -> OK
-
 Resource:
     - Check -> PROBABLY
 
 Texture:
-    - Load Textures - OK
-    - Initial texture is default white => could be achieved?
     - Parse texture atlas -
-    - multiple active texture slots. => OK
-    - ERROR WHEN DISPLAY !! Find it.
-        - CAUSE: Width and height of resource loading. Find a solution.Width becomes 50325 (w * h), h is OK btw. Must be 305 165
-        SO, TODO is to be able to extracr both w and h from an image while keeping the file format too. (maybe hints as params? e.g. ezLoadResource(EZ_TEX, ...) or ezLoadResource(EZ_FILE, ...))
 
 Renderer:
     - Implement batch rendering
     - Use global vao
     - struct EZBatchRenderer;
     - Implement ortho projection.
+    -  FOR NOW, (until a struct EZRenderer struct is implemented and contains w and h) pass w and h as params. (BAD)
 
 Sprite:
-    - Release Sprite - OK
-    - Default shader -> e.x. ezCreateRawSprite() for non-shader version sprites.
     - ASSERTION!
 
 Math:
@@ -35,6 +24,9 @@ Math:
 
 Log:
     - DEBUG_ENABLED doesn't work
+
+CMAKE:
+    - GLFW loc, CGLM loc
 
 FIXME:
     - None (thankfully)

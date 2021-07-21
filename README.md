@@ -72,6 +72,7 @@ The library depends on the following:
 - OpenGL/GLAD - As the rendering backend (though Vulkan must be implemented, *in the future*, to be efficient). GPU must support at least OpenGL 3.3.
 - GLFW - As the window and input manager. 
 - stb - As for parsing image files.
+- Handmade Maths - As the math library.
 
 ## Platforms
 Note that this library is written using MacOS BigSur, so MacOS should probably work fine. I haven't tested this in Linux or Windows (Windows, oof) *yet*, but I will, probably as the library develops into a more sophisticated library.

@@ -79,6 +79,7 @@ struct EZWindow *ezCreateWindow(const char *title, int width, int height) {
     }
 
     glEnable(GL_BLEND);
+    glEnable(GL_DEPTH_TEST);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); /* Cout = C1 * A1 + C2 * (1-A2) */
 
     glfwSetErrorCallback(ezGLFWErrorCallback);

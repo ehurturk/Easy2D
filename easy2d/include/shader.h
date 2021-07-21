@@ -9,6 +9,7 @@
 extern "C" {
 #endif
 
+#include <cglm/cglm.h>
 #include <stdarg.h>
 
 #define EZ_VERTEX_SHADER 0
@@ -32,9 +33,13 @@ unsigned int ezGetShaderProgramId(struct EZShader *shader);
 struct EZShader *ezSequentialShaderPipeline();
 void ezAddToShaderPipeline(struct EZShader *shader, int type, const char *src);
 void ezFinishShaderPipeline(struct EZShader *shader);
+void ezUseShader(const struct EZShader *shader);
 
 /* Direct Way to Create Shader Pipeline */
 struct EZShader *ezDirectShaderPipeline(int n, ...); /* variadic of EZShaderInfo */
+
+/* Uniforms */
+void ezSetShaderUniformMat4(struct EZShader *shader, const char *loc, mat4 mvp);
 
 /* Resource Deallocation */
 void ezReleaseShader(struct EZShader *shader);

@@ -11,8 +11,8 @@ set(TO_BE_LINKED ${OPENGL_LIBRARIES} ${GLFW_LIB})
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_STANDARD 99)
 
-include_directories(${CMAKE_SOURCE_DIR}/vendor ${CMAKE_SOURCE_DIR}/easy2d/include/)
-add_library(${CMAKE_PROJECT_NAME} SHARED easy2d/include/easy2d.h easy2d/include/window.h easy2d/src/window.c easy2d/include/log.h easy2d/include/application.h easy2d/src/application.c extern/glad.c extern/stb_image.c easy2d/include/sprite.h easy2d/src/sprite.c easy2d/include/shader.h easy2d/include/texture.h easy2d/src/shader.c easy2d/src/texture.c easy2d/include/renderer.h easy2d/src/renderer.c easy2d/include/resource.h easy2d/src/resource.c easy2d/include/util.h easy2d/include/math/math.h easy2d/src/math/math.c)
+include_directories(${CMAKE_SOURCE_DIR}/vendor ${CMAKE_SOURCE_DIR}/easy2d/include/ /usr/local/include)
+add_library(${CMAKE_PROJECT_NAME} SHARED easy2d/include/easy2d.h easy2d/include/window.h easy2d/src/window.c easy2d/include/log.h easy2d/include/application.h easy2d/src/application.c extern/glad.c extern/stb_image.c easy2d/include/sprite.h easy2d/src/sprite.c easy2d/include/shader.h easy2d/include/texture.h easy2d/src/shader.c easy2d/src/texture.c easy2d/include/renderer.h easy2d/src/renderer.c easy2d/include/resource.h easy2d/src/resource.c easy2d/include/util.h easy2d/include/transform.h easy2d/src/transform.c)
 set_target_properties(${CMAKE_PROJECT_NAME} PROPERTIES
         VERSION ${PROJECT_VERSION}
         SOVERSION 1

@@ -170,6 +170,15 @@ struct EZShader *ezDirectShaderPipeline(int n, ...) { /* variadic of EZShaderInf
     return shader;
 }
 
+void ezUseShader(const struct EZShader *shader) {
+    glUseProgram(shader->prgid);
+}
+
+/* Uniforms */
+void ezSetShaderUniformMat4(struct EZShader *shader, const char *loc, mat4 mat) {
+    glUniformMatrix4fv(glGetUniformLocation(shader->prgid, loc), 1, GL_FALSE, (const GLfloat *) mat);
+}
+
 void ezReleaseShader(struct EZShader *shader) {
     shader->prgid = 0;
     shader->vid = 0;
