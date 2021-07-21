@@ -15,18 +15,23 @@ struct EZRendererConfig {
     enum types renderer_type;
 };
 
-void ezRenderSprite(const struct EZSprite *sprite) {
+void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam) {
     ASSERT(sprite, "[EZ2D:ERROR]: Can't render a sprite which is NULL\n");
 
     struct EZShader *shader = ezGetSpriteShader(sprite);
     ezUseShader(shader);
 
-    mat4 proj;
-    glm_ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f, proj);
-//    glm_perspective(glm_rad(50), (float)4/(float)3, 0.1f, 100.0f, proj);
-    mat4 model, view;
-    glm_mat4_identity(model);
-    glm_mat4_identity(view);
+//    mat4 proj;
+//    glm_ortho(0.0f, 800.0f, 600.0f, 0.0f, -1.0f, 1.0f, proj);
+//    mat4 model, view;
+//    glm_mat4_identity(model);
+//    glm_mat4_identity(view);
+//
+    mat4 proj, model, view;
+
+    ezGetProjMatrix(cam, proj);
+    ezGetModelMatrix(cam, model);
+    ezGetViewMatrix(cam, view);
 
     ezSetShaderUniformMat4(shader, "ez_Projection", proj);
     ezSetShaderUniformMat4(shader, "ez_Model", model);

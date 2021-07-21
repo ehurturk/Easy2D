@@ -16,14 +16,15 @@ extern "C" { /* name mangling */
 
 struct EZWindowConfig {
     const char *title;
-    int width;
-    int height;
+    float width;
+    float height;
 };
 
 typedef struct EZWindow EZWindow;
 
 struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config);
-struct EZWindow *ezCreateWindow(const char *title, int width, int height);
+struct EZWindow *ezCreateWindow(const char *title, float width, float height);
+struct EZWindowConfig ezGetWindowConfig(const struct EZWindow *win);
 void ezToggleVSync(int value);
 void ezSetWindowTitle(const struct EZWindow *window, const char *title);
 int ezIsWindowOpen(const struct EZWindow *window);

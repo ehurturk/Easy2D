@@ -12,18 +12,33 @@ Renderer:
     - Implement batch rendering
     - Use global vao
     - struct EZBatchRenderer;
-    - Implement ortho projection.
     -  FOR NOW, (until a struct EZRenderer struct is implemented and contains w and h) pass w and h as params. (BAD)
+    - also change the orth matrix based on w and h (callback funcs)
 
 Sprite:
     - ASSERTION!
 
-Math:
-    - Orthographic projection!!
-    - Compatible with GL?
-
 Log:
     - DEBUG_ENABLED doesn't work
+
+Camera:
+    - Matrices: sir yes sir
+    - Position
+    - Move camera by keyboard input
+
+Input:
+    - implement
+
+Scene:
+    - have camera
+    - bind the renderer
+    - gameobjs
+
+Renderer:
+    - idk
+
+Also:
+    - Move sprite by keyboard input, not the CAMERA!!
 
 CMAKE:
     - GLFW loc, CGLM loc

@@ -28,7 +28,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 #endif
 
-    GLFWwindow *window = glfwCreateWindow(config.width, config.height, config.title, NULL, NULL);
+    GLFWwindow *window = glfwCreateWindow((int)config.width, (int)config.height, config.title, NULL, NULL);
     if (window == NULL) {
         EZ_ERROR_RAW("[GLFW ERROR]: Could not initialize the window.\n");
         glfwTerminate();
@@ -55,7 +55,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
     return ez_window;
 }
 
-struct EZWindow *ezCreateWindow(const char *title, int width, int height) {
+struct EZWindow *ezCreateWindow(const char *title, float width, float height) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -90,6 +90,10 @@ struct EZWindow *ezCreateWindow(const char *title, int width, int height) {
     ez_window->config          = (struct EZWindowConfig){.title = title, .width = width, .height = height};
 
     return ez_window;
+}
+
+inline struct EZWindowConfig ezGetWindowConfig(const struct EZWindow *win) {
+    return win->config;
 }
 
 inline void ezToggleVSync(int value) {
