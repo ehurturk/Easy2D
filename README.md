@@ -121,13 +121,15 @@ To get this engine locally, there are 2 options for you: 1) build & install from
     ```shell
     sudo make install # you can change where to install the library by editing the Makefile
     ```
-
+#### Downloading the prebuilt binaries for your platform
+Here is the [download](https://github.com/ehurturk/Easy2D.git) link to download the correct binaries without building from the source code.
+To be able to successfully install Easy2D to your system, just move the downloaded library file (`libEasy2D.dylib` for mac) to `/usr/local/lib`, and the whole `include` folder to `/usr/local/include`.
 
 
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-###Including the library into your project
+### Including the library into your project
 Although the library is made using the C programming language, it can be used within C++ projects as well. After you have completed the [installation](#installation) process, the necessary _dynamic library_ would be placed under `/usr/local/lib` directory, whereas the necessary _include files_ would be placed under `/usr/local/include` directory. 
 
  - **Using a package manager like `CMake`**:
