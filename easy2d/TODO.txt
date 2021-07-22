@@ -30,12 +30,14 @@ Input:
     - implement
 
 Scene:
-    - have camera
-    - bind the renderer
-    - gameobjs
+    - have camera - yes
+    - bind the renderer - important
+    - gameobjs => uids - access them using their own unique ids;
 
 Renderer:
-    - idk
+    - no need? unless a batch renderer is implemented
+    - also no need to have a sprite parameter for the renderScene function, but I have not implemented linked lists/vectors yet.
+    - in the renderScene function render all sprites by calling their own renderSprite functions.
 
 Also:
     - Move sprite by keyboard input, not the CAMERA!!

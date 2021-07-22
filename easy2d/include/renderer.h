@@ -9,6 +9,7 @@
 #include "shader.h"
 #include "texture.h"
 #include "camera.h"
+#include "scene.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -17,7 +18,7 @@ extern "C" {
 
 /* batch renderer struct could be useful in the future */
 
-void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam);
+void ezRenderScene(const struct EZSprite *sprite, const struct EZScene *scene);
 void ezClearFrame();
 void ezSetBackgroundColor(float r, float g, float b, float a);
 

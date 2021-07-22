@@ -9,8 +9,16 @@
 extern "C" {
 #endif
 
+typedef struct EZScene EZScene;
 
+#define EZ_CAMERA 0
+#define EZ_RENDERER 1
+#define EZ_GAMEOBJECT 2
 
+struct EZScene *ezCreateScene();
+
+void ezAddToScene(struct EZScene *scene, void *comp, int type);
+void *ezGetSceneComponent(const struct EZScene *scene, int type);
 
 #ifdef __cplusplus
 }
