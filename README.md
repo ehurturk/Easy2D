@@ -1,97 +1,296 @@
-# Easy2D 
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Thanks again! Now go create something AMAZING! :D
+-->
 
-Easy2D is a simple yet robust 2D Game Engine/API that aims to create 2D games that is written using C99 however could be used in C++ projects as well.
 
-Since this is a library, there are several options to **build** and **use** this library. First, you can build from the source code (which is recommended, and explained below) or 2) install the pre-built library and header file (also explained)
 
-## Build
-### Building from source
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-To build this library into your system, please paste the following commands into your terminal:
 
-```shell
-git clone https://github.com/ehurturk/Easy2D.git
-cd Easy2D
-mkdir build
-cd build
-cmake ..
-sudo make
-sudo make install 
-```
-Using this way, you would be able to build and install the necessary library and header files into your system.
 
-### Installing the library and header files
-If you are too lazy to build from the source, you can just directly download the prebuilt library and header file from [here](), and move `libEasy2D.1.0.dylib` (for MacOS) or `libEasy2D.1.0.so` (for Linux) or `libEasy2D.1.0.dll` (for Windows but not sure, gotta test it) to `/usr/local/lib`, and move the `Easy2D` folder to `/usr/local/include` with the `mv` command in the terminal.
-Here is an example:
-```shell
-mv libEasy2D.1.0.dylib /usr/local/lib/
-mv Easy2D /usr/local/include/
-```
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="gallery/logo.png">
+    <img src="gallery/logo.png" alt="Logo" width="80" height="80">
+   </a>
+<h3 align="center">Easy 2D</h3>
+  <p align="center">
+    A simple but robust 2D game engine/API aimed to create simple 2D games.
+    <br />
+    <a href="https://github.com/ehurturk/Easy2D"><strong>Explore the docs »</strong></a>
+    <br />
+    <br />
+    <a href="https://github.com/ehurturk/Easy2D">View Demo</a>
+    ·
+    <a href="https://github.com/ehurturk/Easy2D/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/ehurturk/Easy2D/issues">Request Feature</a>
+  </p>
+</p>
 
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li>
+      <a href="#about-the-project">About The Project</a>
+      <ul>
+        <li><a href="#built-with">Built With</a></li>
+      </ul>
+    </li>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#roadmap">Roadmap</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#license">License</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#acknowledgements">Acknowledgements</a></li>
+  </ol>
+</details>
+
+
+
+<!-- ABOUT THE PROJECT -->
+## About The Project
+
+
+This engine was initially oriented on a simple game that me and my father decided to make: **Tank Wars**. Frankly, I wanted to create a more of like an engine that simplifies the process of creating various types games, instead of focusing on a single game. That's why I have started the **Easy 2D** project - in which I improve my *C* and *OpenGL* knowledge with creating a useful software that creates things I love. Also note that this Engine (though as of now it really is an API/Wrapper of *OpenGL*) is **only** focused on 2D rendering, however after this project I *may* implement *Easy3D* which focuses on 3D rendering.
+
+Also, you *may* find the code obscure/not professional - since I develop the library as I learn (on the fly). If you do, please send me an email (emirhurturk444@gmail.com) and I would be happy to alter the code according to your observation.
+
+### Built With
+
+* [OpenGL 4.3](https://www.opengl.org) - the [GLAD](https://glad.dav1d.de/) loader
+* [GLFW](https://www.glfw.org) - Window & Input handler
+* [stb](https://github.com/nothings/stb) - Image Parsing
+* [cglm](https://github.com/recp/cglm) - Math library
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+To get this engine locally, there are 2 options for you: 1) build & install from the source (**recommended**), 2) download the prebuilt binaries for your platform. All the dependencies of the engine are already in the repo, so no need to download any external library locally (although cmake must be installed if you are planning to build from the source). Here are some simple steps to get this engine up and running locally on your system.
+### Prerequisites
+
+* [CMake](https://cmake.org/) (If you are planning to build from the source)
+
+### Installation
+
+#### Building & Installing from source
+1. Clone the repo
+   ```sh
+   git clone https://github.com/ehurturk/Easy2D.git
+   ```
+2. Create the build directory
+   ```sh
+   mkdir -p ./build
+   ```
+3. Generate the build files
+   ```sh
+   cd build && cmake ..
+   ```
+4. Compile the project
+    ```shell
+    make # if a problem happens, try adding sudo (ex: sudo make)
+    ```
+5. Install the library to your system
+    ```shell
+    sudo make install # you can change where to install the library by editing the Makefile
+    ```
+
+
+
+<!-- USAGE EXAMPLES -->
 ## Usage
-Since this is a *library*, you need to **include** and **link** it in your project. To do so, you can arrange the settings of your favorite ide to automatically find and use the dynamic library and the header file, or you can simply use cmake and paste the following into your `CMakeLists.txt` file:
-```cmake
-cmake_minimum_required(VERSION 3.19)
-project(Easy2DSandbox)
 
-set(CMAKE_CXX_STANDARD 17) # for using C++ 17 standard
-set(CMAKE_C_STANDARD 99) # for using C99 standard
+###Including the library into your project
+Although the library is made using the C programming language, it can be used within C++ projects as well. After you have completed the [installation](#installation) process, the necessary _dynamic library_ would be placed under `/usr/local/lib` directory, whereas the necessary _include files_ would be placed under `/usr/local/include` directory. 
 
-find_library(Easy2DLIB libEasy2D.1.0.dylib)
-message(STATUS ${EASY2D_LIB})
+ - **Using a package manager like `CMake`**:
 
-include_directories(/usr/local/include)
-add_executable(Easy2DSandbox main.cpp)
-target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${Easy2DLIB})
-```
-Now in your source file (say `main.cpp`), you can include the whole library as following:
-```c
-#include <Easy2D/easy2d.h> /* which would include all of the necessary files */
+   I recommend using cmake as the build file generator which  simplifies the entire process. 
+   For projects using CMake, here is a simple `CMakeLists.txt` file to get you started with Easy2D:
+   ```cmake
+   # CMakeListst.txt, placed inside the root directory of the project.
+   cmake_minimum_required(VERSION 3.19)
+   project(PROJECT_NAME)
 
-int main()
-{
-    EZ_DEBUGC("\\033[0;31m ", "Hi"); /* which is included from Easy2D/log.h*/
-    return 0;
-}
-```
+   set(CMAKE_CXX_STANDARD 17) # for C++17 standard
+   set(CMAKE_C_STANDARD 99) # for C99 standard
 
-Alternatively, if you want only the specific files (say `window.h`), you can use:
-```c
-#include <Easy2D/window.h>
-int main()
-{
-    struct ezWindow *window = ezCreateWindow("EASY2D", 800, 600);
-    return 0;
-}
-```
-Note that the API uses opaque types for (nearly) all the primary structures to ensure encapsulation, such as `EZSprite`, or `EZTexture`, besides the main application struct which is `EZApplication`. Therefore, instead of directly accessing members of structs, use getters instead, vice versa for setters.
+   find_library(Easy2DLIB libEasy2D.1.0.dylib) # locate the dynamic library file inside /usr/local/lib/
+   message(STATUS ${EASY2D_LIB}) # output the path of the lib to see if cmake found the file or not
 
-To see an example usage which demonstrates how this API works, see [this](https://github.com/ehurturk/Easy2DSandbox.git) sandbox repo or [this]() documentation.
-## Dependencies
-The library depends on the following:
-- OpenGL/GLAD - As the rendering backend (though Vulkan must be implemented, *in the future*, to be efficient). GPU must support at least OpenGL 3.3.
-- GLFW - As the window and input manager. 
-- stb - As for parsing image files.
-- Handmade Maths - As the math library.
-
-## Platforms
-Note that this library is written using MacOS BigSur, so MacOS should probably work fine. I haven't tested this in Linux or Windows (Windows, oof) *yet*, but I will, probably as the library develops into a more sophisticated library.
-
-## Roadmap & TODO
-As of July 2021 the library has a long way to go.
-Version 1.0.0 includes the following:
-- Window Creation & Window Handling
-- Input Manager 
-- OpenGL Renderer
-- Spritesheet Parser 
-- Sprite Creation
+   include_directories(/usr/local/include) # since the Easy2D include files are placed under /usr/local/include, you need to include this inside cmake to be able to access the header files
+   add_executable(PROJECT_NAME main.cpp)
+   target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${Easy2DLIB})
+   ```
+- **Using a simple `Makefile`**:
+   ```makefile
+   LIB=-L/usr/local/lib # the lib location
+   INC=-I/usr/local/include # the include direction
+   CC = g++ # the g++ compiler
+   CFLAGS = -Wall # enable all warnings
   
-For version 1.0.1, my TODO list is the following:
-- Entity Management System
-- Batch Rendering
-- Component System for Entities
-- Entity Parenting
+   default:    main
 
-## Important Notice
-Note that I am developing this library **on the fly**, meaning that I am learning while I am developing. Therefore, the project may
-include code that is written unprofessionally and naive. If you do see these kind of code, please contact me (emirhurturk444@gmail.com) or open a pull request or issue, whatever you want. I would be very happy to see these corrections since I am not yet experienced developing C and OpenGL. Thanks in advance.
+   main: 
+       $(CC) $(CFLAGS) $(INC) main.cpp -o main
+
+   clean:
+       rm -r test.o make.out
+   ```
+  
+### Example demonstrating a simple sprite being rendered
+Here is a boilerplate code that makes use of Easy2D which renders a white rectangle in the middle of the screen:
+```c
+#include <Easy2D/easy2d.h> /* the public header file (note: use angled brackets (<>) */
+
+#define EZ_DEBUG_ENABLED
+
+void init();
+void update();
+void destroy();
+
+EZApplication *app; /* the main application */
+EZScene *scene; /* the scene containing all gameobjects, camera, etc. */
+
+int main() {
+    app = ezCreateApplication();
+    /* After creating the application, you need to register it to Easy2D */
+    ezRegisterAsApplication(app);
+    /* Then bind the functions */
+    ezBindAppInitCallback(init);
+    ezBindAppUpdateCallback(update);
+    ezBindAppDestroyCallback(destroy);
+    
+    ezStart(); /* start Easy2D application */
+
+    return 0;
+}
+
+
+void init() {
+    app->window   = ezCreateWindow("Easy2DSandbox", 800, 600);
+    scene         = ezCreateScene();
+    EZCamera *cam = ezCreateCamera(EZ_ORTHOGRAPHIC);
+    ezAddToScene(scene, (void *)cam, EZ_CAMERA);
+
+    /* Create a sprite with default shader which implements proj and model matrices by default */
+    EZSprite *sprite = ezSquareSprite();
+
+    // Alternatively, you can bind your own shaders / textures the sprite using:
+
+    // EZShader *shader      = ezDirectShaderPipeline(2, 
+    //                                (EZShaderInfo){.type = EZ_VERTEX_SHADER, .src = "../res/simple.vs"},
+    //                                (EZShaderInfo{.type = EZ_FRAGMENT_SHADER, .src = "../res/simple.fs"}));
+    // ezSetSpriteShader(sprite, shader);
+
+    // EZTexture *tex1 = ezLoadTexture("../res/barack.jpeg");
+    // ezSetSpriteTexture(sprite, tex1); */
+
+    /* Add the sprite to the scene */
+    ezAddToScene(scene, (void *)sprite, EZ_GAMEOBJECT);
+}
+
+void update() {
+    /* The main loop */
+    while (!ezIsWindowOpen(app->window)) {
+        /* Renderer stuff */
+        ezSetBackgroundColor(0.0f, 0.0f, 0.0f, 1.0f);
+        ezClearFrame();
+        
+        /* Render the current scene */
+        ezRenderScene(scene);
+        ezUpdateWindow(app->window);
+    }
+}
+
+void destroy() { 
+    /* The cleanup method basically */
+    ezFreeApp(app); /* deallocate the app */
+    ezDestroyScene(scene); /* deallocate all the objects the scene includes, and their dependent objects */
+}
+
+```
+
+_For more examples, please refer to the [Documentation](https://github.com/ehurturk/Easy2D)_
+
+
+
+<!-- ROADMAP -->
+## Roadmap
+
+See the [open issues](https://github.com/ehurturk/Easy2D/issues) for a list of proposed features (and known issues).
+
+
+
+<!-- CONTRIBUTING -->
+## Contributing
+
+Contributions are what make the open source community such an amazing place to be learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+
+
+<!-- LICENSE -->
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+
+<!-- CONTACT -->
+## Contact
+
+Emir Hurturk - emirhurturk444@gmail.com
+
+Project Link: [https://github.com/ehurturk/Easy2D](https://github.com/ehurturk/Easy2D)
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/ehurturk/Easy2D.svg?style=for-the-badge
+[contributors-url]: https://github.com/ehurturk/Easy2D/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/ehurturk/Easy2D.svg?style=for-the-badge
+[forks-url]: https://github.com/ehurturk/Easy2D/network/members
+[stars-shield]: https://img.shields.io/github/stars/ehurturk/Easy2D.svg?style=for-the-badge
+[stars-url]: https://github.com/ehurturk/Easy2D/stargazers
+[issues-shield]: https://img.shields.io/github/issues/ehurturk/Easy2D.svg?style=for-the-badge
+[issues-url]: https://github.com/ehurturk/Easy2D/issues
+[license-shield]: https://img.shields.io/github/license/ehurturk/Easy2D.svg?style=for-the-badge
+[license-url]: https://github.com/ehurturk/Easy2D/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/emir-h%C3%BCrt%C3%BCrk-2724571a3/
+[product-screenshot]: images/screenshot.png
