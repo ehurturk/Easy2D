@@ -28,7 +28,7 @@
 <br />
 <p align="center">
   <a href="gallery/logo.png">
-    <img src="gallery/logo.png" alt="Logo" width="80" height="80">
+    <img src="gallery/logo.png" alt="Logo">
    </a>
 <h3 align="center">Easy 2D</h3>
   <p align="center">
