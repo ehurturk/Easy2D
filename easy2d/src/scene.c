@@ -59,3 +59,9 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
             break;
     }
 }
+
+void ezDestroyScene(struct EZScene *scene) {
+    free(scene->cam);
+    ezReleaseSprite(scene->def_spr);
+    free(scene);
+}
