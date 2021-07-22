@@ -43,7 +43,9 @@ Also:
     - Move sprite by keyboard input, not the CAMERA!!
 
 CMAKE:
-    - GLFW loc, CGLM loc
+    - GLFW loc
+
+Now, the scene accepts only 1 sprite - change it to multiple sprites.
 
 FIXME:
     - None (thankfully)

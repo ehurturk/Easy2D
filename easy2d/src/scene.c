@@ -3,6 +3,7 @@
 //
 
 #include "scene.h"
+#include "sprite.h"
 #include "camera.h"
 #include "log.h"
 #include <stdlib.h>
@@ -10,6 +11,7 @@
 struct EZScene {
     struct EZCamera *cam;
     /* renderer */
+    struct EZSprite *def_spr;
     /* gameobjects */
 };
 
@@ -36,6 +38,7 @@ void ezAddToScene(struct EZScene *scene, void *comp, int type) {
             /* handle renderer */
             break;
         case EZ_GAMEOBJECT:
+            scene->def_spr = (struct EZSprite *) comp;
             /* handle gameobject arrays */
             break;
         default:
@@ -50,7 +53,7 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
         case EZ_RENDERER:
             return NULL;
         case EZ_GAMEOBJECT:
-            return NULL;
+            return scene->def_spr;
         default:
             return NULL;
             break;

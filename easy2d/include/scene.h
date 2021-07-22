@@ -20,6 +20,7 @@ struct EZScene *ezCreateScene();
 void ezAddToScene(struct EZScene *scene, void *comp, int type);
 void *ezGetSceneComponent(const struct EZScene *scene, int type);
 
+
 #ifdef __cplusplus
 }
 #endif

@@ -18,7 +18,8 @@ extern "C" {
 
 /* batch renderer struct could be useful in the future */
 
-void ezRenderScene(const struct EZSprite *sprite, const struct EZScene *scene);
+void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam);
+void ezRenderScene(const struct EZScene *scene);
 void ezClearFrame();
 void ezSetBackgroundColor(float r, float g, float b, float a);
 
