@@ -49,5 +49,7 @@ Now, the scene accepts only 1 sprite - change it to multiple sprites.
 
 Free more scene members - as you go.
 
+IFDEF __CPLUSPLUS impl on all headers!!
+
 FIXME:
     - None (thankfully)

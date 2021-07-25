@@ -4,6 +4,7 @@
 
 #include "window.h"
 #include "log.h"
+#include "input.h"
 
 struct EZWindow {
     GLFWwindow *nativeWindow;
@@ -47,6 +48,9 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
 
     glfwSetErrorCallback(ezGLFWErrorCallback);
     glfwSetFramebufferSizeCallback(window, ezFrameBufferSizeCallback);
+    glfwSetKeyCallback(window, ezGLFWKeyInputCallback);
+    glfwSetMouseButtonCallback(window, ezGLFWMBInputCallback);
+    glfwSetCursorPosCallback(window, ezGLFWMouseInputCallback);
 
     struct EZWindow *ez_window = malloc(sizeof(struct EZWindow));
     ez_window->nativeWindow    = window;

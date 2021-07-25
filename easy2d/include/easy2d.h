@@ -20,16 +20,20 @@
 #ifndef EASY2D_H
 #define EASY2D_H
 
-
-#include "window.h"
-#include "log.h"
+/* API Headers */
 #include "application.h"
-#include "sprite.h"
-#include "shader.h"
-#include "texture.h"
-#include "util.h"
+#include "camera.h"
+#include "input.h"
+#include "log.h"
 #include "renderer.h"
 #include "resource.h"
-#include "math/math.h"
+#include "scene.h"
+#include "shader.h"
+#include "sprite.h"
+#include "texture.h"
+#include "transform.h"
+#include "util.h"
+#include "window.h"
+
 
 #endif//EASY2D_H
