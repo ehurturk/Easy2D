@@ -48,6 +48,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
 
     glfwSetErrorCallback(ezGLFWErrorCallback);
     glfwSetFramebufferSizeCallback(window, ezFrameBufferSizeCallback);
+
     glfwSetKeyCallback(window, ezGLFWKeyInputCallback);
     glfwSetMouseButtonCallback(window, ezGLFWMBInputCallback);
     glfwSetCursorPosCallback(window, ezGLFWMouseInputCallback);
@@ -88,6 +89,10 @@ struct EZWindow *ezCreateWindow(const char *title, float width, float height) {
 
     glfwSetErrorCallback(ezGLFWErrorCallback);
     glfwSetFramebufferSizeCallback(window, ezFrameBufferSizeCallback);
+
+    glfwSetKeyCallback(window, ezGLFWKeyInputCallback);
+    glfwSetMouseButtonCallback(window, ezGLFWMBInputCallback);
+    glfwSetCursorPosCallback(window, ezGLFWMouseInputCallback);
 
     struct EZWindow *ez_window = malloc(sizeof(struct EZWindow));
     ez_window->nativeWindow    = window;

@@ -49,6 +49,11 @@ Now, the scene accepts only 1 sprite - change it to multiple sprites.
 
 Free more scene members - as you go.
 
+ALSO DEFINE EZAPI - dllimport - _WIN32, dllexport - _WIN32, __attribute__(visibility("default")) - GNUC for any functions that are going to be exported to dll
+
+SHADER INTEGRATION WITH THE ACTUAL API
+
+
 IFDEF __CPLUSPLUS impl on all headers!!
 
 FIXME:
