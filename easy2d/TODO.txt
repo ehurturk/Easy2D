@@ -53,8 +53,13 @@ ALSO DEFINE EZAPI - dllimport - _WIN32, dllexport - _WIN32, __attribute__(visibi
 
 SHADER INTEGRATION WITH THE ACTUAL API
 
+CONVERT ARR VECS TO STRUCT VECS
 
 IFDEF __CPLUSPLUS impl on all headers!!
+
+translation doesnt work....
+modifying the model matrix must theoretically alter vertex data
+YES IT DOES YEHOOO
 
 FIXME:
     - None (thankfully)

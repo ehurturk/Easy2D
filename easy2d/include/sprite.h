@@ -12,6 +12,8 @@ extern "C" { /* name mangling */
 #include <stdlib.h>
 #include "shader.h"
 #include "texture.h"
+#include "transform.h"
+#include <cglm/cglm.h>
 
 typedef struct EZSprite EZSprite;
 
@@ -22,11 +24,14 @@ struct VertexLayout {
 };
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout);
-struct EZSprite *ezSquareSprite();
-struct EZSprite *ezCreateQuad(int width, int height); /* will come with default shaders. */
+struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h);
 
 void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader);
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture);
+
+void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz);
+void ezScaleSprite(struct EZSprite *sprite, vec3 xyz);
+void ezRotateSprite(struct EZSprite *sprite, float angle_d, vec3 axis);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);
@@ -39,6 +44,7 @@ unsigned int ezGetSpriteEBO(const struct EZSprite *sprite);
 unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite);
+struct EZTransform *ezGetSpriteTransform(const struct EZSprite *sprite);
 
 void ezReleaseSprite(struct EZSprite *sprite);
 

@@ -25,7 +25,7 @@ void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam) {
     mat4 proj, model, view;
 
     ezGetProjMatrix(cam, proj);
-    ezGetModelMatrix(cam, model);
+    ezGetTransformModel(ezGetSpriteTransform(sprite), model);
     ezGetViewMatrix(cam, view);
 
     ezSetShaderUniformMat4(shader, "ez_Projection", proj);
@@ -57,8 +57,16 @@ void ezRenderScene(const struct EZScene *scene) {
     mat4 proj, model, view;
 
     ezGetProjMatrix(cam, proj);
-    ezGetModelMatrix(cam, model);
+    ezGetTransformModel(ezGetSpriteTransform(sprite), model);
     ezGetViewMatrix(cam, view);
+
+    printf("MODEL MAT\n");
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++)
+            printf("%f ", model[j][i]);
+        printf("\n");
+    }
+    printf("END\n");
 
     ezSetShaderUniformMat4(shader, "ez_Projection", proj);
     ezSetShaderUniformMat4(shader, "ez_Model", model);

@@ -18,6 +18,7 @@ struct EZSprite {
     struct EZShader *shader;
     /* Texture */
     /* transform */
+    struct EZTransform *transform;
 };
 
 
@@ -81,19 +82,21 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
     buff->textures = malloc(max_units * sizeof(ezGetSizeofTexture()));
     for (int i = 0; i < max_units; i++)
         buff->textures[i] = NULL;
+    buff->transform = ezInitTransform();
     return buff;
 }
 
 /*
  * Create a new sprite containing the default shaders. (it will be a white square if no shaders are specified)
 */
-struct EZSprite *ezSquareSprite() {
+struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
+
     float vertices[] = {
             /*   Position       UV */
-            350.0f, 350.0f, 0.0f, 0.0f, 0.0f,// bottom left
-            450.0f, 350.0f, 0.0f, 1.0f, 0.0f, // bottom right
-            450.0f, 250.0f, 0.0f, 1.0f, 1.0f,  // top right
-            350.0f, 250.0f, 0.0f, 0.0f, 1.0f  // top left
+            x - w/2, y + w/2, 0.0f, 0.0f, 0.0f,// bottom left
+            x + w/2 , y + w/2, 0.0f, 1.0f, 0.0f, // bottom right
+            x + w/2, y - w/2, 0.0f, 1.0f, 1.0f,  // top right
+            x - w/2, y - w/2, 0.0f, 0.0f, 1.0f  // top left
     };
 
 //    float vertices[] = {
@@ -154,6 +157,7 @@ struct EZSprite *ezSquareSprite() {
                              "uniform mat4 ez_Model;\n"
                              "uniform mat4 ez_Projection;\n"
                              "uniform mat4 ez_View;\n"
+
                              "void main() {\n"
                              "    gl_Position = ez_Projection * ez_View * ez_Model * vec4(pos, 1.0f);\n"
                              "}";
@@ -174,10 +178,8 @@ struct EZSprite *ezSquareSprite() {
     buff->textures = malloc(sizeof(ezGetSizeofTexture()) * max_units);
     for (int i = 0; i < max_units; i++)
         buff->textures[i] = NULL;
+    buff->transform = ezInitTransform();
     return buff;
-}
-
-struct EZSprite *ezCreateQuad(int width, int height) {
 }
 
 void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader) {
@@ -193,6 +195,21 @@ void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
     }
     else
         EZ_ERROR_RAW("[EZ2D:ERROR]: Maximum number of textures is exceeded. Can't add more textures\n");
+}
+
+void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
+    struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    glm_translate(transform->model, xyz);
+}
+
+void ezScaleSprite(struct EZSprite *sprite, vec3 xyz) {
+    struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    glm_scale(transform->model, xyz);
+}
+
+void ezRotateSprite(struct EZSprite *sprite, float angle_d, vec3 axis) {
+    struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    glm_rotate(transform->model, glm_rad(angle_d), axis);
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
@@ -235,6 +252,10 @@ inline unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite) {
 
 inline unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite) {
     return sprite->texture_slots;
+}
+
+struct EZTransform *ezGetSpriteTransform(const struct EZSprite *sprite) {
+    return sprite->transform;
 }
 
 void ezReleaseSprite(struct EZSprite *sprite) {

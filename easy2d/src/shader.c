@@ -179,6 +179,10 @@ void ezSetShaderUniformMat4(struct EZShader *shader, const char *loc, mat4 mat) 
     glUniformMatrix4fv(glGetUniformLocation(shader->prgid, loc), 1, GL_FALSE, (const GLfloat *) mat);
 }
 
+void ezSetShaderUniformFloat(struct EZShader *shader, const char *loc, float val) {
+    glUniform1f(glGetUniformLocation(shader->prgid, loc), val);
+}
+
 void ezReleaseShader(struct EZShader *shader) {
     shader->prgid = 0;
     shader->vid = 0;

@@ -40,6 +40,7 @@ struct EZShader *ezDirectShaderPipeline(int n, ...); /* variadic of EZShaderInfo
 
 /* Uniforms */
 void ezSetShaderUniformMat4(struct EZShader *shader, const char *loc, mat4 mvp);
+void ezSetShaderUniformFloat(struct EZShader *shader, const char *loc, float val);
 
 /* Resource Deallocation */
 void ezReleaseShader(struct EZShader *shader);

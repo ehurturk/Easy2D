@@ -8,7 +8,6 @@
 struct EZCamera {
     mat4 proj;
     mat4 view;
-    mat4 model;
 
     vec3 pos;
 };
@@ -17,9 +16,6 @@ void ezGetProjMatrix(struct EZCamera *cam, mat4 m) {
     glm_mat4_copy(cam->proj, m);
 }
 
-void ezGetModelMatrix(struct EZCamera *cam, mat4 m) {
-    glm_mat4_copy(cam->model, m);
-}
 
 void ezGetViewMatrix(struct EZCamera *cam, mat4 m) {
     glm_mat4_copy(cam->view, m);
@@ -41,7 +37,6 @@ struct EZCamera *ezCreateCamera(int type) {
             break;
     }
 
-    glm_mat4_identity(cam->model);
     glm_mat4_identity(cam->view);
 
     cam->pos[0] = 0.0f; /* x */

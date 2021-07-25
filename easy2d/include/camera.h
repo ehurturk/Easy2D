@@ -20,7 +20,6 @@ typedef struct EZCamera EZCamera;
 #define EZ_PERSPECTIVE 1
 
 void ezGetProjMatrix(struct EZCamera *cam, mat4 m);
-void ezGetModelMatrix(struct EZCamera *cam, mat4 m);
 void ezGetViewMatrix(struct EZCamera *cam, mat4 m);
 
 void ezUpdateCamera(const struct EZCamera *cam);
