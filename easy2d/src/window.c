@@ -6,6 +6,9 @@
 #include "log.h"
 #include "input.h"
 
+int frames = 0;
+double t, t0, fps;
+
 struct EZWindow {
     GLFWwindow *nativeWindow;
     struct EZWindowConfig config; /* no need for a pointer - a basic struct which serves as a config */
@@ -18,7 +21,6 @@ void ezGLFWErrorCallback(int code, const char *error) {
 void ezFrameBufferSizeCallback(GLFWwindow *window, int w, int h) {
     glViewport(0, 0, w, h);
 }
-
 
 struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
     glfwInit();
@@ -42,7 +44,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
         EZ_ERROR_RAW("[GLAD ERROR]: Could not initialize glad.\n");
         return NULL;
     }
-
+    t0 = glfwGetTime();
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA); /* Cout = C1 * A1 + C2 * (1-A2) */
 
@@ -60,7 +62,7 @@ struct EZWindow *ezCreateWindowWithConfig(struct EZWindowConfig config) {
     return ez_window;
 }
 
-struct EZWindow *ezCreateWindow(const char *title, float width, float height) {
+struct EZWindow *ezCreateWindow(const char *title, float width, float height, int resizable) {
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -68,6 +70,8 @@ struct EZWindow *ezCreateWindow(const char *title, float width, float height) {
 #ifdef __APPLE__
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 #endif
+
+    glfwWindowHint(GLFW_RESIZABLE, resizable);
 
     GLFWwindow *window = glfwCreateWindow(width, height, title, NULL, NULL);
     if (window == NULL) {
@@ -77,7 +81,7 @@ struct EZWindow *ezCreateWindow(const char *title, float width, float height) {
     }
 
     glfwMakeContextCurrent(window);
-
+    t0 = glfwGetTime();
     if (!gladLoadGLLoader((GLADloadproc) glfwGetProcAddress)) {
         EZ_ERROR_RAW("[GLAD ERROR]: Could not initialize glad.\n");
         return NULL;
@@ -105,8 +109,16 @@ inline struct EZWindowConfig ezGetWindowConfig(const struct EZWindow *win) {
     return win->config;
 }
 
+GLFWwindow *ezGetNativeWindow(const struct EZWindow *win) {
+    return win->nativeWindow;
+}
+
 inline void ezToggleVSync(int value) {
     glfwSwapInterval(value);
+}
+
+void ezToggleWindowResize(int value) {
+    glfwWindowHint(GLFW_RESIZABLE, value);
 }
 
 inline void ezSetWindowTitle(const struct EZWindow *window, const char *title) {
@@ -126,5 +138,14 @@ void ezUpdateWindow(const struct EZWindow *window) {
     glfwPollEvents();
 }
 
-void ezGetFPS() {
+float ezGetFPS() {
+    t = glfwGetTime();
+    if ((t - t0) > 1.0 || frames == 0)
+    {
+        fps = (double)frames / (t - t0);
+        t0 = t;
+        frames = 0;
+    }
+    frames++;
+    return fps;
 }

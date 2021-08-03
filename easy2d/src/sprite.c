@@ -203,8 +203,13 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
 }
 
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz) {
+    printf("scale\n");
+    for (int i = 0; i < 3; i++)
+        printf("%f ", xyz[i]);
+    printf("end\n");
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
     glm_scale(transform->model, xyz);
+
 }
 
 void ezRotateSprite(struct EZSprite *sprite, float angle_d, vec3 axis) {

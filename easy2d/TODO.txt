@@ -42,8 +42,6 @@ Renderer:
 Also:
     - Move sprite by keyboard input, not the CAMERA!!
 
-CMAKE:
-    - GLFW loc
 
 Now, the scene accepts only 1 sprite - change it to multiple sprites.
 
@@ -57,9 +55,7 @@ CONVERT ARR VECS TO STRUCT VECS
 
 IFDEF __CPLUSPLUS impl on all headers!!
 
-translation doesnt work....
-modifying the model matrix must theoretically alter vertex data
-YES IT DOES YEHOOO
+MOVEMENT IS KINDA SLOPPY THO - SOLVED BY USING GLFWGETKEY
 
 FIXME:
     - None (thankfully)

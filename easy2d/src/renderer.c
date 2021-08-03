@@ -51,7 +51,7 @@ void ezRenderScene(const struct EZScene *scene) {
     struct EZSprite *sprite = (struct EZSprite *) ezGetSceneComponent(scene, EZ_GAMEOBJECT);
     struct EZShader *shader = ezGetSpriteShader(sprite);
     struct EZCamera *cam = (struct EZCamera *) ezGetSceneComponent(scene, EZ_CAMERA);
-
+    ezUpdateCamera(cam);
     ezUseShader(shader);
 
     mat4 proj, model, view;
@@ -60,17 +60,17 @@ void ezRenderScene(const struct EZScene *scene) {
     ezGetTransformModel(ezGetSpriteTransform(sprite), model);
     ezGetViewMatrix(cam, view);
 
-    printf("MODEL MAT\n");
-    for (int i = 0; i < 4; i++) {
-        for (int j = 0; j < 4; j++)
-            printf("%f ", model[j][i]);
-        printf("\n");
-    }
-    printf("END\n");
-
     ezSetShaderUniformMat4(shader, "ez_Projection", proj);
     ezSetShaderUniformMat4(shader, "ez_Model", model);
     ezSetShaderUniformMat4(shader, "ez_View", view);
+
+//    printf("MAT BEGIN\n");
+//    for (int i = 0; i < 4; i++) {
+//        for (int j = 0; j < 4; j++)
+//            printf("%f ", model[j][i]);
+//        printf("\n");
+//    }
+//    printf("MAT END\n");
 
     /* Textures aren't necessary, however shaders are. */
     if (ezGetSpriteTextures(sprite) != NULL) {

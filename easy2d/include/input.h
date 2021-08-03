@@ -30,9 +30,9 @@ extern "C" {
 #define EZ_KEY_N GLFW_KEY_N
 #define EZ_KEY_O GLFW_KEY_O
 #define EZ_KEY_P GLFW_KEY_P
-#define EZ_KEY_S GLFW_KEY_Q
+#define EZ_KEY_S GLFW_KEY_S
 #define EZ_KEY_R GLFW_KEY_R
-#define EZ_KEY_Q GLFW_KEY_S
+#define EZ_KEY_Q GLFW_KEY_Q
 #define EZ_KEY_T GLFW_KEY_T
 #define EZ_KEY_U GLFW_KEY_U
 #define EZ_KEY_V GLFW_KEY_V

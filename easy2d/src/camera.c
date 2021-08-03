@@ -45,3 +45,14 @@ struct EZCamera *ezCreateCamera(int type) {
 
     return cam;
 }
+
+void ezUpdateCamera(const struct EZCamera *cam) {
+    extern struct EZApplication *app;
+    GLFWwindow* win = ezGetNativeWindow(app->window);
+    int w, h;
+    glfwGetWindowSize(win, &w, &h);
+
+    glm_ortho(0.0f, (float) w, (float) h, 0.0f, -1.0f, 1.0f, cam->proj);
+
+
+}
