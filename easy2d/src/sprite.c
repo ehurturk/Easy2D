@@ -93,21 +93,21 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
 */
 struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
 
-    float vertices[] = {
-            /*   Position       UV */
-            x - w/2, y + w/2, 0.0f, 0.0f, 0.0f,// bottom left
-            x + w/2 , y + w/2, 0.0f, 1.0f, 0.0f, // bottom right
-            x + w/2, y - w/2, 0.0f, 1.0f, 1.0f,  // top right
-            x - w/2, y - w/2, 0.0f, 0.0f, 1.0f  // top left
-    };
-
 //    float vertices[] = {
 //            /*   Position       UV */
-//            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,// bottom left
-//            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
-//            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  // top right
-//            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f  // top left
+//            x - w/2, y + w/2, 0.0f, 0.0f, 0.0f,// bottom left
+//            x + w/2 , y + w/2, 0.0f, 1.0f, 0.0f, // bottom right
+//            x + w/2, y - w/2, 0.0f, 1.0f, 1.0f,  // top right
+//            x - w/2, y - w/2, 0.0f, 0.0f, 1.0f  // top left
 //    };
+
+    float vertices[] = {
+            /*   Position       UV */
+            -0.5f, -0.5f, 0.0f, 0.0f, 0.0f,// bottom left
+            0.5f, -0.5f, 0.0f, 1.0f, 0.0f, // bottom right
+            0.5f, 0.5f, 0.0f, 1.0f, 1.0f,  // top right
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f  // top left
+    };
 
     unsigned int indices[] = {
             0, 1, 3,// first Triangle
@@ -183,6 +183,16 @@ struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
     buff->transform = ezInitTransform();
     buff->w = w;
     buff->h = h;
+    vec3 pos;
+    pos[0] = x;
+    pos[1] = y;
+    pos[2] = z;
+    vec3 scale;
+    scale[0] = w;
+    scale[1] = h;
+    scale[2] = 1.0f;
+    glm_translate(buff->transform->model, pos);
+    glm_scale(buff->transform->model, scale);
     return buff;
 }
 
@@ -203,6 +213,9 @@ void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
 
 void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    xyz[0] *= 0.001f;
+    xyz[1] *= 0.001f;
+    xyz[2] *= 0.001f;
     glm_translate(transform->model, xyz);
 }
 
@@ -221,7 +234,6 @@ void ezRotateSprite(struct EZSprite *sprite, float angle_d) {
     vec3 t1;
     vec3 t2;
     vec3 axis;
-    printf("s w : %f, s h : %f", sprite->w, sprite->h);
     t1[0] = 0.5f * sprite->w;
     t1[1] = 0.5f * sprite->h;
     t1[2] = 0;
@@ -232,9 +244,9 @@ void ezRotateSprite(struct EZSprite *sprite, float angle_d) {
     axis[1] = 0.0f;
     axis[2] = 1.0f;
     /* Translate back */
-    glm_translate(transform->model, t1);
-    glm_rotate(transform->model, glm_rad(angle_d), axis);
-    glm_translate(transform->model, t2);
+//    glm_translate(transform->model, t1);
+    glm_rotate(transform->model, glm_rad(angle_d * 0.01f), axis);
+//    glm_translate(transform->model, t2);
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
