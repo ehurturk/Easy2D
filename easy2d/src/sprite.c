@@ -13,6 +13,8 @@ struct EZSprite {
     unsigned int vertexCount, indexCount;
     unsigned int texture_slots;
 
+    float w, h;
+
     struct EZTexture **textures;
     /* Shader */
     struct EZShader *shader;
@@ -179,6 +181,8 @@ struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
     for (int i = 0; i < max_units; i++)
         buff->textures[i] = NULL;
     buff->transform = ezInitTransform();
+    buff->w = w;
+    buff->h = h;
     return buff;
 }
 
@@ -203,18 +207,34 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
 }
 
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz) {
-    printf("scale\n");
-    for (int i = 0; i < 3; i++)
-        printf("%f ", xyz[i]);
-    printf("end\n");
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
     glm_scale(transform->model, xyz);
-
 }
 
-void ezRotateSprite(struct EZSprite *sprite, float angle_d, vec3 axis) {
+void ezRotateSprite(struct EZSprite *sprite, float angle_d) {
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    /*
+        model = glm::translate(model, glm::vec3(0.5f * size.x, 0.5f * size.y, 0.0f));
+        model = glm::rotate(model, glm::radians(rotate), glm::vec3(0.0f, 0.0f, 1.0f));
+        model = glm::translate(model, glm::vec3(-0.5f * size.x, -0.5f * size.y, 0.0f));
+    */
+    vec3 t1;
+    vec3 t2;
+    vec3 axis;
+    printf("s w : %f, s h : %f", sprite->w, sprite->h);
+    t1[0] = 0.5f * sprite->w;
+    t1[1] = 0.5f * sprite->h;
+    t1[2] = 0;
+    t2[0] = -0.5f * sprite->w;
+    t2[1] = -0.5f * sprite->h;
+    t2[2] = 0;
+    axis[0] = 0.0f;
+    axis[1] = 0.0f;
+    axis[2] = 1.0f;
+    /* Translate back */
+    glm_translate(transform->model, t1);
     glm_rotate(transform->model, glm_rad(angle_d), axis);
+    glm_translate(transform->model, t2);
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
