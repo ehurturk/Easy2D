@@ -240,7 +240,7 @@ void destroy() {
 
 ```
 
-_For more examples, please refer to the [Documentation](https://github.com/ehurturk/Easy2D)_
+_For more examples, please refer to the [Documentation](https://github.com/ehurturk/Easy2D) or the [Sandbox Repository](https://github.com/ehurturk/Easy2DSandbox)_.
 
 
 
