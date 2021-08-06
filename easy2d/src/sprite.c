@@ -354,5 +354,6 @@ void ezReleaseSprite(struct EZSprite *sprite) {
         for (int i = 0; i < sprite->texture_slots; i++)
             ezReleaseTexture(sprite->textures[i]);
     }
+    free(sprite->transform);
     free(sprite);
 }
