@@ -64,7 +64,7 @@ struct EZResource *ezLoadFile(const char *file, int *err) {
 /* loads image file based on OpenGL standards, starting from the bottom left corner */
 struct EZResource *ezLoadImage(const char *file, int *err) {
     ASSERT(file, "[EZ2D:ERROR]: Can't load a NULL image file.\n");
-    stbi_set_flip_vertically_on_load(0); /* WHAT THE ACTUAL FUCK */
+    stbi_set_flip_vertically_on_load(0);
 
     int w, h, n_channels;
     unsigned char *data = stbi_load(file, &w, &h, &n_channels, 4);

@@ -18,7 +18,6 @@ struct EZSprite {
     struct EZTexture **textures;
     /* Shader */
     struct EZShader *shader;
-    /* Texture */
     /* transform */
     struct EZTransform *transform;
 };
@@ -191,8 +190,24 @@ struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
     scale[0] = w;
     scale[1] = h;
     scale[2] = 1.0f;
-    glm_translate(buff->transform->model, pos);
+    buff->transform->model[3][0] += pos[0];
+    buff->transform->model[3][1] += pos[1];
+    buff->transform->model[3][2] += pos[2];
+//    glm_translate(buff->transform->model, pos);
     glm_scale(buff->transform->model, scale);
+
+    buff->transform->position[0] = x;
+    buff->transform->position[1] = y;
+    buff->transform->position[2] = 0.0f;
+
+    buff->transform->scale[0] = 1.0f;
+    buff->transform->scale[1] = 1.0f;
+    buff->transform->scale[2] = 1.0f;
+
+    buff->transform->rotation[0] = 0.0f;
+    buff->transform->rotation[1] = 0.0f;
+    buff->transform->rotation[2] = 0.0f;
+
     return buff;
 }
 
@@ -213,14 +228,23 @@ void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
 
 void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
-    xyz[0] *= 0.001f;
-    xyz[1] *= 0.001f;
-    xyz[2] *= 0.001f;
-    glm_translate(transform->model, xyz);
+//    xyz[0] *= 0.001f; /* must multiply it otherwise it is so damn fast */
+//    xyz[1] *= 0.001f;
+//    xyz[2] *= 0.001f;
+    transform->position[0] += xyz[0];
+    transform->position[1] += xyz[1];
+    transform->position[2] += xyz[2];
+    transform->model[3][0] += xyz[0];
+    transform->model[3][1] += xyz[1];
+    transform->model[3][2] += xyz[2];
+//    glm_translate(transform->model, xyz);
 }
 
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz) {
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
+    transform->scale[0] *= xyz[0];
+    transform->scale[1] *= xyz[1];
+    transform->scale[2] *= xyz[2];
     glm_scale(transform->model, xyz);
 }
 
@@ -244,9 +268,37 @@ void ezRotateSprite(struct EZSprite *sprite, float angle_d) {
     axis[1] = 0.0f;
     axis[2] = 1.0f;
     /* Translate back */
-//    glm_translate(transform->model, t1);
-    glm_rotate(transform->model, glm_rad(angle_d * 0.01f), axis);
-//    glm_translate(transform->model, t2);
+    /* SINCE 2D, X AND Y AXIS ROTATIONS DON'T REALLY MATTER */
+    transform->rotation[0] += 0;
+    transform->rotation[1] += 0;
+    transform->rotation[2] += angle_d;
+
+    if (transform->rotation[2] > 360.0f) {
+        transform->rotation[2] -= 360.0f;
+    }
+    else if (transform->rotation[2] < -360.0f) {
+        transform->rotation[2] += 360.0f;
+    }
+
+    glm_rotate(transform->model, glm_rad(angle_d), axis); /* 0.01 seems ABSURD but it works :)) */
+}
+
+void ezSetSpritePosition(struct EZSprite *sprite, float x, float y) {
+    struct EZTransform *transform = ezGetSpriteTransform(sprite);
+
+    vec3 t;
+    t[0] = x -transform->position[0];
+    t[1] = y - transform->position[1];
+    t[2] = transform->position[2]; /* 2D: Z = 0 */
+
+    transform->position[0] = x;
+    transform->position[1] = y;
+    transform->position[2] = 0;
+
+    transform->model[3][0] += t[0];
+    transform->model[3][1] += t[1];
+    transform->model[3][2] += t[2];
+//    glm_translate(transform->model, t); HAS FUCKING ISSUE
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {

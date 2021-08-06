@@ -33,6 +33,8 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz);
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz);
 void ezRotateSprite(struct EZSprite *sprite, float angle_d);
 
+void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
+
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);
 struct EZTexture **ezGetSpriteTextures(const struct EZSprite *sprite);
