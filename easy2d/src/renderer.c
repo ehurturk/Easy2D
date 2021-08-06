@@ -63,7 +63,7 @@ void ezRenderScene(const struct EZScene *scene) {
     ezSetShaderUniformMat4(shader, "ez_Projection", proj);
     ezSetShaderUniformMat4(shader, "ez_Model", model);
     ezSetShaderUniformMat4(shader, "ez_View", view);
-
+/*
     printf("MAT BEGIN\n");
     for (int i = 0; i < 4; i++) {
         for (int j = 0; j < 4; j++)
@@ -71,7 +71,7 @@ void ezRenderScene(const struct EZScene *scene) {
         printf("\n");
     }
     printf("MAT END\n");
-
+*/
     /* Textures aren't necessary, however shaders are. */
     if (ezGetSpriteTextures(sprite) != NULL) {
         for (int i = 0; i < ezGetSpriteTextureSlots(sprite); i++) {
