@@ -20,6 +20,7 @@ extern "C" { /* name mangling */
 
 typedef struct EZSprite EZSprite;
 
+
 /* TODO: Populate this layout once new features are added. */
 struct VertexLayout {
     int positionCount;
@@ -50,6 +51,8 @@ unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite);
 const char *ezGetSpriteName(const struct EZSprite *sprite);
+float ezGetSpriteWidth(const struct EZSprite *s);
+float ezGetSpriteHeight(const struct EZSprite *s);
 struct EZTransform *ezGetSpriteTransform(const struct EZSprite *sprite);
 
 void ezReleaseSprite(struct EZSprite *sprite);

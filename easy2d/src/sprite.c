@@ -4,6 +4,7 @@
 
 #include "sprite.h"
 #include "util.h"
+#include "aabb.h"
 
 #include <glad/glad.h>
 
@@ -22,8 +23,9 @@ struct EZSprite {
     struct EZTransform *transform;
     /* name */
     const char *name;
+    /* AABB Collision box */
+    struct EZAabbBoundingBox *hitbox;
 };
-
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout) {
     ASSERT(vertices, "[EZ2D:ERROR]: Can't create a sprite with NULL vertices\n");
@@ -211,6 +213,7 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
     buff->transform->rotation[2] = 0.0f;
 
     buff->name = name;
+    buff->hitbox = ezInitAabbBoundingBox(buff->w, buff->h, buff->transform->position[0], buff->transform->position[1]);
 
     return buff;
 }
@@ -367,6 +370,10 @@ const char *ezGetSpriteName(const struct EZSprite *sprite) {
     return sprite->name;
 }
 
+float ezGetSpriteWidth(const struct EZSprite *s) { return s->w; }
+
+float ezGetSpriteHeight(const struct EZSprite *s) { return s->h; }
+
 void ezReleaseSprite(struct EZSprite *sprite) {
     EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a sprite...\n");
     ezReleaseShader(sprite->shader);
@@ -375,5 +382,6 @@ void ezReleaseSprite(struct EZSprite *sprite) {
             ezReleaseTexture(sprite->textures[i]);
     }
     free(sprite->transform);
+    free(sprite->hitbox);
     free(sprite);
 }
