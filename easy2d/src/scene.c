@@ -71,7 +71,10 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
 
 void ezDestroyScene(struct EZScene *scene) {
     free(scene->cam);
-    ezReleaseSprite(scene->def_spr);
+    EZVector *vec = (EZVector *) ezGetSceneComponent(scene, EZ_GAMEOBJS);
+    for (int i = 0; i < ezVectorTotal(vec); i++) {
+        ezReleaseSprite((struct EZSprite *) ezVectorGet(vec, i));
+    }
     ezVectorFree(scene->vec);
     free(scene->vec);
     free(scene);
