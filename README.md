@@ -82,6 +82,8 @@ This engine was initially oriented on a simple game that me and my father decide
 
 Also, you *may* find the code obscure/not professional - since I develop the library as I learn (on the fly). If you do, please send me an email (emirhurturk444@gmail.com) and I would be happy to alter the code according to your observation.
 
+A note: Since the engine is currently under development, the codebase lacks quality at some parts, however I aim to refactor this whole engine once I get things up going on and working.
+
 ### Built With
 
 * [OpenGL 4.3](https://www.opengl.org) - the [GLAD](https://glad.dav1d.de/) loader
