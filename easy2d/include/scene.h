@@ -13,7 +13,8 @@ typedef struct EZScene EZScene;
 
 #define EZ_CAMERA 0
 #define EZ_RENDERER 1
-#define EZ_GAMEOBJECT 2
+#define EZ_S_GAMEOBJECT 2
+#define EZ_GAMEOBJS 3
 
 struct EZScene *ezCreateScene();
 

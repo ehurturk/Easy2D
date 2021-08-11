@@ -20,6 +20,8 @@ struct EZSprite {
     struct EZShader *shader;
     /* transform */
     struct EZTransform *transform;
+    /* name */
+    const char *name;
 };
 
 
@@ -90,7 +92,7 @@ struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize,
 /*
  * Create a new sprite containing the default shaders. (it will be a white square if no shaders are specified)
 */
-struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
+struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, float w, float h) {
 
 //    float vertices[] = {
 //            /*   Position       UV */
@@ -207,6 +209,8 @@ struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h) {
     buff->transform->rotation[0] = 0.0f;
     buff->transform->rotation[1] = 0.0f;
     buff->transform->rotation[2] = 0.0f;
+
+    buff->name = name;
 
     return buff;
 }
@@ -357,6 +361,10 @@ inline unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite) {
 
 struct EZTransform *ezGetSpriteTransform(const struct EZSprite *sprite) {
     return sprite->transform;
+}
+
+const char *ezGetSpriteName(const struct EZSprite *sprite) {
+    return sprite->name;
 }
 
 void ezReleaseSprite(struct EZSprite *sprite) {
