@@ -226,18 +226,30 @@ void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
         EZ_ERROR_RAW("[EZ2D:ERROR]: Maximum number of textures is exceeded. Can't add more textures\n");
 }
 
-void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz) {
+void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
-//    xyz[0] *= 0.001f; /* must multiply it otherwise it is so damn fast */
-//    xyz[1] *= 0.001f;
-//    xyz[2] *= 0.001f;
-    transform->position[0] += xyz[0];
-    transform->position[1] += xyz[1];
-    transform->position[2] += xyz[2];
-    transform->model[3][0] += xyz[0];
-    transform->model[3][1] += xyz[1];
-    transform->model[3][2] += xyz[2];
-//    glm_translate(transform->model, xyz);
+
+    switch (mode) {
+        case EZ_LOCAL_REF:
+            transform->position[0] += xyz[0];
+            transform->position[1] += xyz[1];
+            transform->position[2] += xyz[2];
+            transform->model[3][0] += xyz[0];
+            transform->model[3][1] += xyz[1];
+            transform->model[3][2] += xyz[2];
+            break;
+        case EZ_WORLD_REF:
+            transform->position[0] += xyz[0];
+            transform->position[1] += xyz[1];
+            transform->position[2] += xyz[2];
+            transform->model[3][0] += xyz[0];
+            transform->model[3][1] += xyz[1];
+            transform->model[3][2] += xyz[2];
+            break;
+        default:
+            EZ_ERROR_RAW("[EZ2D:ERROR]: Only local and world references are supported, please check your reference mode\n");
+            break;
+    }
 }
 
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz) {

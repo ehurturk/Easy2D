@@ -15,6 +15,9 @@ extern "C" { /* name mangling */
 #include "transform.h"
 #include <cglm/cglm.h>
 
+#define EZ_LOCAL_REF 0
+#define EZ_WORLD_REF 1
+
 typedef struct EZSprite EZSprite;
 
 /* TODO: Populate this layout once new features are added. */
@@ -29,7 +32,7 @@ struct EZSprite *ezSquareSprite(float x, float y, float z, float w, float h);
 void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader);
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture);
 
-void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz);
+void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode);
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz);
 void ezRotateSprite(struct EZSprite *sprite, float angle_d);
 

@@ -28,6 +28,10 @@ extern "C" {
         }                                                     \
     } while (0)
 
+#define EZ_VEC3(a, x, y, z) vec3 a; \
+a[0] = x;                           \
+a[1] = y;                           \
+a[2] = z;
 
 #ifdef __cplusplus
 }

@@ -34,6 +34,7 @@
 #include "transform.h"
 #include "util.h"
 #include "window.h"
+#include "stl/vector.h"
 
 
 #endif//EASY2D_H
