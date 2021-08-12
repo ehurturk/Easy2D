@@ -65,7 +65,6 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
             return scene->vec;
         default:
             return NULL;
-            break;
     }
 }
 
@@ -77,6 +76,11 @@ void *ezFindSpriteWithName(const struct EZScene *scene, const char *name) {
         }
     }
     return NULL;
+}
+
+void ezInstantiateSprite(struct EZScene *scene, const void *comp, float x, float y) {
+    ezAddToScene(scene, comp, EZ_GAMEOBJS);
+    ezSetSpritePosition((struct EZSprite *) comp, x, y);
 }
 
 void ezDestroyScene(struct EZScene *scene) {

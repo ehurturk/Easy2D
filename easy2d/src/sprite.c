@@ -238,9 +238,11 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
 
     switch (mode) {
         case EZ_LOCAL_REF:
+                  /* adjusting pos */
             transform->position[0] += xyz[0];
             transform->position[1] += xyz[1];
             transform->position[2] += xyz[2];
+                    /* translation */
             transform->model[3][0] += xyz[0];
             transform->model[3][1] += xyz[1];
             transform->model[3][2] += xyz[2];
