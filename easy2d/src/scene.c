@@ -69,6 +69,16 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
     }
 }
 
+void *ezFindSpriteWithName(const struct EZScene *scene, const char *name) {
+    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+        struct EZSprite *spr = (struct EZSprite *) ezVectorGet(scene->vec, i);
+        if (ezGetSpriteName(spr) == name) {
+            return (void *) spr;
+        }
+    }
+    return NULL;
+}
+
 void ezDestroyScene(struct EZScene *scene) {
     free(scene->cam);
     EZVector *vec = (EZVector *) ezGetSceneComponent(scene, EZ_GAMEOBJS);

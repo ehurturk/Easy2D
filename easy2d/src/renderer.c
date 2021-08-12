@@ -8,14 +8,6 @@
 #include <cglm/cglm.h>
 #include <glad/glad.h>
 
-enum projections {ORTHOGRAPHIC, PERSPECTIVE};
-enum types {BATCH, PLAIN};
-
-struct EZRendererConfig {
-    enum projections proj_type;
-    enum types renderer_type;
-};
-
 void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam) {
     ASSERT(sprite, "[EZ2D:ERROR]: Can't render a sprite which is NULL\n");
 

@@ -22,8 +22,6 @@ Log:
     - DEBUG_ENABLED doesn't work
 
 Camera:
-    - Matrices: sir yes sir
-    - Position
     - Move camera by keyboard input
 
 Input:
