@@ -32,14 +32,24 @@
 */
 void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manager) {
     manager->parent = parent;
+
     system("mkdir -p ./runtime_libs");
     for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
         struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
         char cmd[100], libname[100];
         sprintf(cmd, CC" -shared ../%s -o ./runtime_libs/lib%s.so -lEasy2D", script->src, script->name);
-        system(cmd);
         sprintf(libname, "./runtime_libs/lib%s.so", script->name);
 
+        FILE *file;
+        if ((file = fopen(libname, "r")))
+        {
+            /* file exists */
+            fclose(file);
+        }
+        else
+        {
+            system(cmd);
+        }
 
         void *lib = dlopen(libname, RTLD_LAZY);
         if (lib) {

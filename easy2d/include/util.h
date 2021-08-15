@@ -6,6 +6,7 @@
 #define EASY2D_UTIL_H
 
 #include "log.h"
+#include <stdio.h>
 #include <assert.h>
 
 #ifdef __cplusplus
