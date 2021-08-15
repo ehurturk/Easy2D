@@ -40,7 +40,6 @@ void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam) {
 
 void ezRenderScene(const struct EZScene *scene) {
     ASSERT(scene, "[EZ2D:ERROR]: Can't render a scene which is NULL\n");
-
     /* General structs */
     EZVector *vec = (EZVector *) ezGetSceneComponent(scene, EZ_GAMEOBJS);
 

@@ -37,7 +37,13 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode);
 void ezScaleSprite(struct EZSprite *sprite, vec3 xyz);
 void ezRotateSprite(struct EZSprite *sprite, float angle_d);
 
+void ezInitSprite(const struct EZSprite *sprite);
+void ezUpdateSprite(const struct EZSprite *sprite);
+
 void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
+
+/* a bridge to actual code */
+void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);

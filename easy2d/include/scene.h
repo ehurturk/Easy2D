@@ -21,6 +21,8 @@ struct EZScene *ezCreateScene();
 void ezAddToScene(struct EZScene *scene, void *comp, int type);
 void *ezGetSceneComponent(const struct EZScene *scene, int type);
 void ezInstantiateSprite(struct EZScene *scene, const void *comp, float x, float y);
+void ezStartScene(const struct EZScene *scene);
+void ezUpdateScene(const struct EZScene *scene);
 void *ezFindSpriteWithName(const struct EZScene *scene, const char *name);
 void ezDestroyScene(struct EZScene *scene);
 

@@ -35,6 +35,7 @@
 #include "util.h"
 #include "window.h"
 #include "stl/vector.h"
+#include "script.h"
 
 
 #endif//EASY2D_H

@@ -33,6 +33,21 @@ struct EZScene *ezCreateScene() {
     return scene;
 }
 
+/* must be called before entering the update loop after everything is initialized and added to the scene */
+void ezStartScene(const struct EZScene *scene) {
+    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+        struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
+        ezInitSprite(sprite);
+    }
+}
+
+void ezUpdateScene(const struct EZScene *scene) {
+    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+        struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
+        ezUpdateSprite(sprite);
+    }
+}
+
 void ezAddToScene(struct EZScene *scene, void *comp, int type) {
     switch (type) {
         case EZ_CAMERA:

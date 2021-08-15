@@ -5,6 +5,8 @@
 #include "sprite.h"
 #include "util.h"
 #include "aabb.h"
+#include "stl/vector.h"
+#include "script.h"
 
 #include <glad/glad.h>
 
@@ -25,6 +27,8 @@ struct EZSprite {
     const char *name;
     /* AABB Collision box */
     struct EZAabbBoundingBox *hitbox;
+    /* Scripts */
+    struct EZScriptManager *script_manager;
 };
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout) {
@@ -215,6 +219,14 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
     buff->name = name;
     buff->hitbox = ezInitAabbBoundingBox(buff->w, buff->h, buff->transform->position[0], buff->transform->position[1]);
 
+    buff->script_manager = malloc(sizeof(struct EZScriptManager));
+    buff->script_manager->scripts = malloc(sizeof(EZVector));
+    buff->script_manager->libs = malloc(sizeof(EZVector));
+
+    ez_vector_init(buff->script_manager->scripts);
+    ez_vector_init(buff->script_manager->libs);
+//    ezInitScriptManager(buff, buff->script_manager);
+
     return buff;
 }
 
@@ -322,6 +334,20 @@ void ezSetSpritePosition(struct EZSprite *sprite, float x, float y) {
 //    glm_translate(transform->model, t); HAS FUCKING ISSUE
 }
 
+void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name) {
+    struct EZScript *script = ezInitScript(path, name);
+    ezVectorPushBack(sprite->script_manager->scripts, (void *) script);
+}
+
+void ezInitSprite(const struct EZSprite *sprite) {
+    ezInitScriptManager(sprite, sprite->script_manager);
+    ezStartScripts(sprite->script_manager);
+}
+
+void ezUpdateSprite(const struct EZSprite *sprite) {
+    ezUpdateScripts(sprite->script_manager);
+}
+
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
     return sprite->shader;
 }
@@ -385,5 +411,6 @@ void ezReleaseSprite(struct EZSprite *sprite) {
     }
     free(sprite->transform);
     free(sprite->hitbox);
+    ezDeleteManager(sprite->script_manager);
     free(sprite);
 }
