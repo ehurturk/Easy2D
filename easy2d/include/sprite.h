@@ -38,6 +38,7 @@ void ezScaleSprite(struct EZSprite *sprite, vec3 xyz);
 void ezRotateSprite(struct EZSprite *sprite, float angle_d);
 
 void ezInitSprite(const struct EZSprite *sprite);
+void ezStartSprite(const struct EZSprite *sprite);
 void ezUpdateSprite(const struct EZSprite *sprite);
 
 void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);

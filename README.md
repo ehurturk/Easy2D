@@ -95,7 +95,7 @@ A note: Since the engine is currently under development, the codebase lacks qual
 <!-- GETTING STARTED -->
 ## Getting Started
 
-To get this engine locally, there are 2 options for you: 1) build & install from the source (**recommended**), 2) download the prebuilt binaries for your platform. All the dependencies of the engine are already in the repo, so no need to download any external library locally (although cmake must be installed if you are planning to build from the source). Here are some simple steps to get this engine up and running locally on your system.
+To get this engine locally, there are 2 options for you: 1) build & install from the source (**recommended**), 2) download the prebuilt binaries for your platform (as of now the engine supports UNIX machines). All the dependencies of the engine are already in the repo, so no need to download any external library locally (although cmake must be installed if you are planning to build from the source). Here are some simple steps to get this engine up and running locally on your system.
 ### Prerequisites
 
 * [CMake](https://cmake.org/) (If you are planning to build from the source)
@@ -244,7 +244,8 @@ void destroy() {
 
 _For more examples, please refer to the [Documentation](https://github.com/ehurturk/Easy2D) or the [Sandbox Repository](https://github.com/ehurturk/Easy2DSandbox)_.
 
-
+## Supported Platforms
+The engine currently supports UNIX machines since it uses dll 
 
 <!-- ROADMAP -->
 ## Roadmap

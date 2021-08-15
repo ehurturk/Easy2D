@@ -4,9 +4,32 @@
 
 #include "script.h"
 #include "sprite.h"
+#include "log.h"
 #include <stdio.h>
 #include <dlfcn.h>
 
+/* NOTE: This assumes that the project structure is like the following:
+ *
+ * your_project_dir:
+ *     -> your_build_dir:
+ *         -> executable
+ *         -> other stuff
+ *     -> your_scripts_or_other_dirs
+ *
+ *  Note that the executable must be in the build directory.
+ *  The program would generate the runtime_libs folder inside the build directory to place the dynamic libraries
+ *
+ *  The updated project structure would be:
+ *
+ *  your_project_dir:
+ *     -> your_build_dir:
+ *         -> executable
+ *         -> runtime_libs:
+ *             -> the dynamic libraries
+ *         -> other stuff
+ *     -> your_scripts_or_other_dirs
+ *
+*/
 void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manager) {
     manager->parent = parent;
     system("mkdir -p ./runtime_libs");
@@ -21,11 +44,10 @@ void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manage
         void *lib = dlopen(libname, RTLD_LAZY);
         if (lib) {
             ezVectorPushBack(manager->libs, lib);
-            int (*update)(void) = (int (*)()) dlsym ( lib, "update" );
+            int (*update)(struct EZSprite *) = (int (*)(struct EZSprite *)) dlsym ( lib, "update" );
             if (update) {
                 // use function
                 script->update = update;
-                update();
             }
 
             int (*start)(struct EZSprite *) = (int (*)(struct EZSprite *)) dlsym(lib, "start");
@@ -35,7 +57,7 @@ void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manage
 
         }
         else {
-            printf("lib not found at path: %s\n", libname);
+            EZ_ERRORF_RAW("[EZ2D:ERROR]: Dynamic library not found at path: %s\n", libname);
         }
     }
 }
@@ -50,14 +72,14 @@ struct EZScript *ezInitScript(const char *path, const char *name) {
 void ezStartScripts(const struct EZScriptManager *manager) {
     for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
         struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
-        script->start(manager->parent); /* seg fault */
+        script->start(manager->parent);
     }
 }
 
 void ezUpdateScripts(const struct EZScriptManager *manager) {
     for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
         struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
-        script->update();
+        script->update(manager->parent);
     }
 }
 

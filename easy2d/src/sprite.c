@@ -341,6 +341,9 @@ void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *na
 
 void ezInitSprite(const struct EZSprite *sprite) {
     ezInitScriptManager(sprite, sprite->script_manager);
+}
+
+void ezStartSprite(const struct EZSprite *sprite) {
     ezStartScripts(sprite->script_manager);
 }
 

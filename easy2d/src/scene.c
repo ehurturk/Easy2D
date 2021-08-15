@@ -39,6 +39,11 @@ void ezStartScene(const struct EZScene *scene) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
         ezInitSprite(sprite);
     }
+
+    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+        struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
+        ezStartSprite(sprite);
+    }
 }
 
 void ezUpdateScene(const struct EZScene *scene) {

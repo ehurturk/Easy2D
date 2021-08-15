@@ -18,7 +18,7 @@ struct EZSprite;
 struct EZScript {
     const char *src;
     const char *name;
-    int (*update)(void);
+    int (*update)(struct EZSprite *sprite);
     int (*start)(struct EZSprite *sprite);
 };
 
