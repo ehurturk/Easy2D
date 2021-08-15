@@ -3,6 +3,7 @@
 //
 
 #include "input.h"
+#include "application.h"
 #include <stdio.h>
 
 struct EZInputManager {
@@ -40,4 +41,9 @@ void ezGLFWMouseInputCallback(GLFWwindow *window, double xpos, double ypos) {
 void ezGLFWMBInputCallback(GLFWwindow *window, int button, int action, int mods) {
     if (manager.mbfunc != NULL)
         manager.mbfunc(button, action);
+}
+
+int ezIsKeyDown(int key) {
+    extern struct EZApplication *app;
+    return glfwGetKey(ezGetNativeWindow(app->window), key) == GLFW_PRESS || glfwGetKey(ezGetNativeWindow(app->window), key) == GLFW_REPEAT;
 }

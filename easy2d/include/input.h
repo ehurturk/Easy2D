@@ -61,6 +61,8 @@ void ezGLFWKeyInputCallback(GLFWwindow *window, int key, int scancode, int actio
 void ezGLFWMouseInputCallback(GLFWwindow *window, double xpos, double ypos);
 void ezGLFWMBInputCallback(GLFWwindow *window, int button, int action, int mods);
 
+int ezIsKeyDown(int key);
+
 
 
 #ifdef __cplusplus
