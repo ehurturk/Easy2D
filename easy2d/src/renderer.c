@@ -38,12 +38,11 @@ void ezRenderSprite(const struct EZSprite *sprite, const struct EZCamera *cam) {
     glDrawElements(GL_TRIANGLES, ezGetSpriteIndexCount(sprite), GL_UNSIGNED_INT, 0);
 }
 
-void ezRenderScene(const struct EZScene *scene) {
-    ASSERT(scene, "[EZ2D:ERROR]: Can't render a scene which is NULL\n");
+void ezRenderScene() {
     /* General structs */
-    EZVector *vec = (EZVector *) ezGetSceneComponent(scene, EZ_GAMEOBJS);
+    EZVector *vec = (EZVector *) ezGetSceneComponent(EZ_GAMEOBJS);
 
-    struct EZCamera *cam = (struct EZCamera *) ezGetSceneComponent(scene, EZ_CAMERA);
+    struct EZCamera *cam = (struct EZCamera *) ezGetSceneComponent(EZ_CAMERA);
     ezUpdateCamera(cam); /* no need to have this since the viewport doesn't really change */
     mat4 proj, model, view;
 
@@ -53,30 +52,30 @@ void ezRenderScene(const struct EZScene *scene) {
     /* TODO: Batch this whole sprite draw call */
     for (int j = 0; j < ezVectorTotal(vec); j++) {
         /* Sprite specific structs - in a gameobj loop */
-//        struct EZSprite *sprite = (struct EZSprite *) ezGetSceneComponent(scene, EZ_S_GAMEOBJECT);
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(vec, j); /* a problem occurs here */
-        /* VECTOR GIVES SEG FAULT - TODO: SOLVE THISSSS */
-        /* FIXME: SOLVE SEG FAULT */
-
-        ezGetTransformModel(ezGetSpriteTransform(sprite), model);
-
-        struct EZShader *shader = ezGetSpriteShader(sprite);
-        ezUseShader(shader);
-        ezSetShaderUniformMat4(shader, "ez_Projection", proj);
-        ezSetShaderUniformMat4(shader, "ez_Model", model);
-        ezSetShaderUniformMat4(shader, "ez_View", view);
-
-        /* Textures aren't necessary, however shaders are. */
-        if (ezGetSpriteTextures(sprite) != NULL) {
-            for (int i = 0; i < ezGetSpriteTextureSlots(sprite); i++) {
-                /* texture array in the sprite */
-                glActiveTexture(GL_TEXTURE0 + i);
-                glBindTexture(GL_TEXTURE_2D, ezGetSpriteTextureIDAt(sprite, i));
+        /* only render if it is active */
+        if (ezIsSpriteActive(sprite)) {
+            ezGetTransformModel(ezGetSpriteTransform(sprite), model);
+            struct EZShader *shader = ezGetSpriteShader(sprite);
+            if (shader != NULL) {
+                ezUseShader(shader);
+                ezSetShaderUniformMat4(shader, "ez_Projection", proj);
+                ezSetShaderUniformMat4(shader, "ez_Model", model);
+                ezSetShaderUniformMat4(shader, "ez_View", view);
+            }
+            /* Textures aren't necessary, however shaders are. */
+            if (ezGetSpriteTextures(sprite) != NULL) {
+                for (int i = 0; i < ezGetSpriteTextureSlots(sprite); i++) {
+                    /* texture array in the sprite */
+                    glActiveTexture(GL_TEXTURE0 + i);
+                    glBindTexture(GL_TEXTURE_2D, ezGetSpriteTextureIDAt(sprite, i));
+                }
+            }
+            if (ezGetSpriteVAO(sprite) != EZ_NOT_RENDERABLE) {
+                glBindVertexArray(ezGetSpriteVAO(sprite));
+                glDrawElements(GL_TRIANGLES, ezGetSpriteIndexCount(sprite), GL_UNSIGNED_INT, 0);
             }
         }
-
-        glBindVertexArray(ezGetSpriteVAO(sprite));
-        glDrawElements(GL_TRIANGLES, ezGetSpriteIndexCount(sprite), GL_UNSIGNED_INT, 0);
     }
 }
 

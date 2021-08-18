@@ -16,15 +16,15 @@ typedef struct EZScene EZScene;
 #define EZ_S_GAMEOBJECT 2
 #define EZ_GAMEOBJS 3
 
-struct EZScene *ezCreateScene();
+void ezCreateScene();
 
-void ezAddToScene(struct EZScene *scene, void *comp, int type);
-void *ezGetSceneComponent(const struct EZScene *scene, int type);
-void ezInstantiateSprite(struct EZScene *scene, const void *comp, float x, float y);
-void ezStartScene(const struct EZScene *scene);
-void ezUpdateScene(const struct EZScene *scene);
-void *ezFindSpriteWithName(const struct EZScene *scene, const char *name);
-void ezDestroyScene(struct EZScene *scene);
+void ezAddToScene(void *comp, int type);
+void *ezGetSceneComponent(int type);
+void ezInstantiateSprite(const void *comp, float x, float y);
+void ezStartScene();
+void ezUpdateScene();
+void *ezFindSpriteWithName(const char *name);
+void ezDestroyScene();
 
 #ifdef __cplusplus
 }

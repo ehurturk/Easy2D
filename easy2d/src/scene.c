@@ -18,23 +18,23 @@ struct EZScene {
 };
 
 int active_scene = 0;
+struct EZScene *scene;
 
-struct EZScene *ezCreateScene() {
+void ezCreateScene() {
     if (active_scene == 1) {
         EZ_ERROR_RAW("[EZ2D:ERROR]: Can't create another scene while a scene is currently active\n");
-        return NULL;
+        return;
     }
 
-    struct EZScene *scene = malloc(sizeof(struct EZScene));
+    scene = malloc(sizeof(struct EZScene));
     scene->cam = NULL;
     scene->vec = malloc(sizeof(EZVector));
     ez_vector_init(scene->vec);
     active_scene = 1;
-    return scene;
 }
 
 /* must be called before entering the update loop after everything is initialized and added to the scene */
-void ezStartScene(const struct EZScene *scene) {
+void ezStartScene() {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
         ezInitSprite(sprite);
@@ -42,18 +42,20 @@ void ezStartScene(const struct EZScene *scene) {
 
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
-        ezStartSprite(sprite);
+        if (ezIsSpriteActive(sprite))
+            ezStartSprite(sprite);
     }
 }
 
-void ezUpdateScene(const struct EZScene *scene) {
+void ezUpdateScene() {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
-        ezUpdateSprite(sprite);
+        if (ezIsSpriteActive(sprite))
+            ezUpdateSprite(sprite);
     }
 }
 
-void ezAddToScene(struct EZScene *scene, void *comp, int type) {
+void ezAddToScene(void *comp, int type) {
     switch (type) {
         case EZ_CAMERA:
             scene->cam = (struct EZCamera *) comp;
@@ -73,7 +75,7 @@ void ezAddToScene(struct EZScene *scene, void *comp, int type) {
     }
 }
 
-void *ezGetSceneComponent(const struct EZScene *scene, int type) {
+void *ezGetSceneComponent(int type) {
     switch (type) {
         case EZ_CAMERA:
             return scene->cam;
@@ -88,7 +90,7 @@ void *ezGetSceneComponent(const struct EZScene *scene, int type) {
     }
 }
 
-void *ezFindSpriteWithName(const struct EZScene *scene, const char *name) {
+void *ezFindSpriteWithName(const char *name) {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *spr = (struct EZSprite *) ezVectorGet(scene->vec, i);
         if (ezGetSpriteName(spr) == name) {
@@ -98,14 +100,15 @@ void *ezFindSpriteWithName(const struct EZScene *scene, const char *name) {
     return NULL;
 }
 
-void ezInstantiateSprite(struct EZScene *scene, const void *comp, float x, float y) {
-    ezAddToScene(scene, comp, EZ_GAMEOBJS);
+void ezInstantiateSprite(const void *comp, float x, float y) {
+
+    ezAddToScene(comp, EZ_GAMEOBJS);
     ezSetSpritePosition((struct EZSprite *) comp, x, y);
 }
 
-void ezDestroyScene(struct EZScene *scene) {
+void ezDestroyScene() {
     free(scene->cam);
-    EZVector *vec = (EZVector *) ezGetSceneComponent(scene, EZ_GAMEOBJS);
+    EZVector *vec = (EZVector *) ezGetSceneComponent(EZ_GAMEOBJS);
     for (int i = 0; i < ezVectorTotal(vec); i++) {
         ezReleaseSprite((struct EZSprite *) ezVectorGet(vec, i));
     }

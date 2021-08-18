@@ -40,16 +40,20 @@ void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manage
         sprintf(cmd, CC" -shared ../%s -o ./runtime_libs/lib%s.so -lEasy2D", script->src, script->name);
         sprintf(libname, "./runtime_libs/lib%s.so", script->name);
 
-        FILE *file;
-        if ((file = fopen(libname, "r")))
-        {
-            /* file exists */
-            fclose(file);
-        }
-        else
-        {
-            system(cmd);
-        }
+//        FILE *file;
+//        if ((file = fopen(libname, "r")))
+//        {
+//            /* file exists */
+//            fclose(file);
+//        }
+//        else
+//        {
+//            system(cmd);
+//        }
+        /* TODO:
+         *  System call is expensive, so use some kind of caching system to decrease the usage of system
+        */
+        system(cmd);
 
         void *lib = dlopen(libname, RTLD_LAZY);
         if (lib) {

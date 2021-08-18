@@ -15,7 +15,7 @@ struct EZSprite {
     unsigned int vao, vbo, ebo;
     unsigned int vertexCount, indexCount;
     unsigned int texture_slots;
-
+    unsigned int active;
     float w, h;
 
     struct EZTexture **textures;
@@ -225,8 +225,81 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
 
     ez_vector_init(buff->script_manager->scripts);
     ez_vector_init(buff->script_manager->libs);
-//    ezInitScriptManager(buff, buff->script_manager);
 
+//    ezInitScriptManager(buff, buff->script_manager);
+    buff->active = 1;
+
+    return buff;
+}
+
+struct EZSprite *ezCreateGameObject(const char *name, float x, float y, float z) {
+
+    struct EZSprite *buff = malloc(sizeof(struct EZSprite));
+    if (buff == NULL) {
+        return NULL;
+    }
+    buff->vao = EZ_NOT_RENDERABLE;
+
+    buff->shader  = NULL;
+    buff->textures = NULL;
+    buff->transform = ezInitTransform();
+    buff->w = 0.0f;
+    buff->h = 0.0f;
+    vec3 pos;
+    pos[0] = x;
+    pos[1] = y;
+    pos[2] = z;
+    vec3 scale;
+    scale[0] = 0.0f;
+    scale[1] = 0.0f;
+    scale[2] = 1.0f;
+    buff->transform->model[3][0] += pos[0];
+    buff->transform->model[3][1] += pos[1];
+    buff->transform->model[3][2] += pos[2];
+//    glm_translate(buff->transform->model, pos);
+    glm_scale(buff->transform->model, scale);
+
+    buff->transform->position[0] = x;
+    buff->transform->position[1] = y;
+    buff->transform->position[2] = 0.0f;
+
+    buff->transform->scale[0] = 1.0f;
+    buff->transform->scale[1] = 1.0f;
+    buff->transform->scale[2] = 1.0f;
+
+    buff->transform->rotation[0] = 0.0f;
+    buff->transform->rotation[1] = 0.0f;
+    buff->transform->rotation[2] = 0.0f;
+
+    buff->name = name;
+    buff->hitbox = NULL;
+
+    buff->script_manager = malloc(sizeof(struct EZScriptManager));
+    buff->script_manager->scripts = malloc(sizeof(EZVector));
+    buff->script_manager->libs = malloc(sizeof(EZVector));
+
+    ez_vector_init(buff->script_manager->scripts);
+    ez_vector_init(buff->script_manager->libs);
+
+    buff->active = 1;
+
+    return buff;
+}
+
+/* Constructs an empty gameobject */
+struct EZSprite *ezEmptySprite(int type, const char *name, float x, float y, float z) {
+    struct EZSprite *buff;
+    switch (type) {
+        case EZ_SQUARE:
+            buff =  ezSquareSprite(name, x, y, z, 0.0f, 0.0f); /* make width and height 0 since it is empty */
+            buff->active = 0;
+            break;
+        case EZ_EMPTY_GAMEOBJ:
+            buff  = ezCreateGameObject(name, x, y, z);
+            break;
+        default:
+            return NULL;
+    }
     return buff;
 }
 
@@ -334,6 +407,10 @@ void ezSetSpritePosition(struct EZSprite *sprite, float x, float y) {
 //    glm_translate(transform->model, t); HAS FUCKING ISSUE
 }
 
+void ezMakeSpriteActive(struct EZSprite *sprite) {
+    sprite->active = 1;
+}
+
 void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name) {
     struct EZScript *script = ezInitScript(path, name);
     ezVectorPushBack(sprite->script_manager->scripts, (void *) script);
@@ -349,6 +426,14 @@ void ezStartSprite(const struct EZSprite *sprite) {
 
 void ezUpdateSprite(const struct EZSprite *sprite) {
     ezUpdateScripts(sprite->script_manager);
+    if (sprite->hitbox != NULL) {
+        sprite->hitbox->x = ezGetSpriteTransform(sprite)->position[0];
+        sprite->hitbox->y = ezGetSpriteTransform(sprite)->position[1];
+    }
+}
+
+int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2) {
+    return ezCheckAabbCollision(s1->hitbox, s2->hitbox);
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
@@ -359,6 +444,10 @@ inline unsigned int ezGetSpriteTextureIDAt(const struct EZSprite *sprite, int i)
     struct EZTexture *tex = sprite->textures[i];
     unsigned int id = ezGetTextureId(tex);
     return id;
+}
+
+inline unsigned int ezIsSpriteActive(const struct EZSprite *sprite) {
+    return sprite->active;
 }
 
 inline struct EZTexture **ezGetSpriteTextures(const struct EZSprite *sprite) {
@@ -407,13 +496,15 @@ float ezGetSpriteHeight(const struct EZSprite *s) { return s->h; }
 
 void ezReleaseSprite(struct EZSprite *sprite) {
     EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a sprite...\n");
-    ezReleaseShader(sprite->shader);
+    if (sprite->shader != NULL)
+        ezReleaseShader(sprite->shader);
     if (sprite->textures != NULL) {
         for (int i = 0; i < sprite->texture_slots; i++)
             ezReleaseTexture(sprite->textures[i]);
     }
     free(sprite->transform);
-    free(sprite->hitbox);
+    if (sprite->hitbox != NULL)
+        free(sprite->hitbox);
     ezDeleteManager(sprite->script_manager);
     free(sprite);
 }

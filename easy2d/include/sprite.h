@@ -18,8 +18,12 @@ extern "C" { /* name mangling */
 #define EZ_LOCAL_REF 0
 #define EZ_WORLD_REF 1
 
-typedef struct EZSprite EZSprite;
+#define EZ_SQUARE 0
+#define EZ_EMPTY_GAMEOBJ 1
 
+#define EZ_NOT_RENDERABLE -9999
+
+typedef struct EZSprite EZSprite;
 
 /* TODO: Populate this layout once new features are added. */
 struct VertexLayout {
@@ -29,6 +33,7 @@ struct VertexLayout {
 
 struct EZSprite *ezCreateSpriteWithVertices(const float *vertices, size_t vsize, const unsigned int *indices, size_t isize, size_t vertexSize, struct VertexLayout layout);
 struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, float w, float h);
+struct EZSprite *ezEmptySprite(int type, const char *name, float x, float y, float z);
 
 void ezSetSpriteShader(struct EZSprite *sprite, struct EZShader *shader);
 void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture);
@@ -41,7 +46,10 @@ void ezInitSprite(const struct EZSprite *sprite);
 void ezStartSprite(const struct EZSprite *sprite);
 void ezUpdateSprite(const struct EZSprite *sprite);
 
+int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2);
+
 void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
+void ezMakeSpriteActive(struct EZSprite *sprite);
 
 /* a bridge to actual code */
 void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name);
@@ -57,6 +65,7 @@ unsigned int ezGetSpriteEBO(const struct EZSprite *sprite);
 unsigned int ezGetSpriteIndexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteVertexCount(const struct EZSprite *sprite);
 unsigned int ezGetSpriteTextureSlots(const struct EZSprite *sprite);
+unsigned int ezIsSpriteActive(const struct EZSprite *sprite);
 const char *ezGetSpriteName(const struct EZSprite *sprite);
 float ezGetSpriteWidth(const struct EZSprite *s);
 float ezGetSpriteHeight(const struct EZSprite *s);

@@ -9,11 +9,13 @@
 extern "C" {
 #endif
 
-struct EZSprite;
 
-typedef struct EZAabbBoundingBox EZAabbBoundingBox;
+struct EZAabbBoundingBox {
+    float w, h;
+    float x, y;
+};
 
-int ezCheckSpriteCollision(struct EZSprite *s1, struct EZSprite *s2);
+int ezCheckAabbCollision(struct EZAabbBoundingBox *b1, struct EZAabbBoundingBox *b2);
 struct EZAabbBoundingBox *ezInitAabbBoundingBox(float w, float h, float x, float y);
 
 #ifdef __cplusplus
