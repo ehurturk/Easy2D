@@ -16,28 +16,37 @@ extern "C" {
 struct EZSprite;
 
 struct EZScript {
-    const char *src;
-    const char *name;
-    int (*update)(struct EZSprite *sprite);
-    int (*start)(struct EZSprite *sprite);
+    void (*update)(struct EZSprite *sprite);
+    void (*start)(struct EZSprite *sprite);
+    void (*destroy)(struct EZSprite *sprite);
 };
 
 struct EZScriptManager {
     struct EZSprite *parent;
     EZVector *scripts;
-    EZVector *libs;
 };
+
+/* This must be called inside the additional script. */
+#define EZ_INIT_SCRIPT(name)        \
+struct EZScript *name;             \
+void init##name() {                 \
+    (name) = (struct EZScript *)malloc(sizeof(struct EZScript));                                \
+    (name)->start = start;            \
+    (name)->update = update;          \
+}
+
+/* This must be called inside your driver file (i.e main.cpp or main.c) to ensure that the scripts are initialized and their corresponding functions will be called */
+#define EZ_INITIALIZE_SCRIPT(name) init##name();
 
 typedef struct EZScriptManager EZScriptManager;
 typedef struct EZScript EZScript;
 
 void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manager);
-struct EZScript *ezInitScript(const char *path, const char *name);
 
 void ezStartScripts(const struct EZScriptManager *manager);
 void ezUpdateScripts(const struct EZScriptManager *manager);
+void ezDestroyScripts(const struct EZScriptManager *manager);
 
-void ezDeleteScript(struct EZScript *script);
 void ezDeleteManager(struct EZScriptManager *manager);
 
 #ifdef __cplusplus

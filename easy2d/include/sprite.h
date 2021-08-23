@@ -13,6 +13,7 @@ extern "C" { /* name mangling */
 #include "shader.h"
 #include "texture.h"
 #include "transform.h"
+#include "script.h"
 #include <cglm/cglm.h>
 
 #define EZ_LOCAL_REF 0
@@ -52,7 +53,7 @@ void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
 void ezMakeSpriteActive(struct EZSprite *sprite);
 
 /* a bridge to actual code */
-void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name);
+void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);

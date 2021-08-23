@@ -6,7 +6,6 @@
 #include "util.h"
 #include "aabb.h"
 #include "stl/vector.h"
-#include "script.h"
 
 #include <glad/glad.h>
 
@@ -221,10 +220,8 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
 
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
-    buff->script_manager->libs = malloc(sizeof(EZVector));
 
     ez_vector_init(buff->script_manager->scripts);
-    ez_vector_init(buff->script_manager->libs);
 
 //    ezInitScriptManager(buff, buff->script_manager);
     buff->active = 1;
@@ -276,10 +273,8 @@ struct EZSprite *ezCreateGameObject(const char *name, float x, float y, float z)
 
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
-    buff->script_manager->libs = malloc(sizeof(EZVector));
 
     ez_vector_init(buff->script_manager->scripts);
-    ez_vector_init(buff->script_manager->libs);
 
     buff->active = 1;
 
@@ -411,8 +406,7 @@ void ezMakeSpriteActive(struct EZSprite *sprite) {
     sprite->active = 1;
 }
 
-void ezSpriteAddScript(struct EZSprite *sprite, const char *path, const char *name) {
-    struct EZScript *script = ezInitScript(path, name);
+void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script) {
     ezVectorPushBack(sprite->script_manager->scripts, (void *) script);
 }
 
