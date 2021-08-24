@@ -6,16 +6,8 @@
 #include "sprite.h"
 #include "camera.h"
 #include "log.h"
-#include "stl/vector.h"
 #include <stdlib.h>
 
-struct EZScene {
-    struct EZCamera *cam;
-    /* renderer */
-    struct EZSprite *def_spr;
-    /* gameobject vector */
-    EZVector *vec;
-};
 
 int active_scene = 0;
 struct EZScene *scene;
@@ -53,6 +45,25 @@ void ezUpdateScene() {
         if (ezIsSpriteActive(sprite))
             ezUpdateSprite(sprite);
     }
+//    /* check collisions */
+//    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+//        for (int j = i; j < ezVectorTotal(scene->vec); j++) {
+//            struct EZSprite *s1 = ezVectorGet(scene->vec, i);
+//            struct EZSprite *s2 = ezVectorGet(scene->vec, j);
+//            if (ezCheckSpriteCollision(s1, s2) && i != j) {
+//                /* move = false */
+//                printf("MAKE MOVE FALSE!\n");
+//                ezSetSpriteMoveable(s1, 0);
+//                ezSetSpriteMoveable(s2, 0);
+//            }
+////            else {
+////                /* move = true */
+////                printf("MAKE MOVE NOT FALSE!\n");
+////                ezSetSpriteMoveable(s1, 1);
+////                ezSetSpriteMoveable(s2, 1);
+////            }
+//        }
+//    }
 }
 
 void ezAddToScene(void *comp, int type) {

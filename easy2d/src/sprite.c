@@ -6,7 +6,7 @@
 #include "util.h"
 #include "aabb.h"
 #include "stl/vector.h"
-
+#include "scene.h"
 #include <glad/glad.h>
 
 
@@ -15,6 +15,8 @@ struct EZSprite {
     unsigned int vertexCount, indexCount;
     unsigned int texture_slots;
     unsigned int active;
+    unsigned int moveable;
+    unsigned int go;
     float w, h;
 
     struct EZTexture **textures;
@@ -225,7 +227,8 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
 
 //    ezInitScriptManager(buff, buff->script_manager);
     buff->active = 1;
-
+    buff->moveable  = 1;
+    buff->go = 0;
     return buff;
 }
 
@@ -271,13 +274,15 @@ struct EZSprite *ezCreateGameObject(const char *name, float x, float y, float z)
     buff->name = name;
     buff->hitbox = NULL;
 
+    buff->moveable = 1;
+
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
 
     ez_vector_init(buff->script_manager->scripts);
 
     buff->active = 1;
-
+    buff->go = 1;
     return buff;
 }
 
@@ -314,13 +319,58 @@ void ezSetSpriteTexture(struct EZSprite *sprite, struct EZTexture *texture) {
 }
 
 void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
+    if (sprite->moveable == 0) {
+        return;
+    }
+    extern struct EZScene *scene;
+    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
+        struct EZSprite *spr = ezVectorGet(scene->vec, i);
+        if (spr != sprite) {
+            if (ezCheckSpriteCollision(sprite, spr)) {
+                if ((sprite->transform->rotation[2] < 90.0f && sprite->transform->rotation[2] >= 0.0f) || (sprite->transform->rotation[2] > -360.0f && sprite->transform->rotation[2] < -270.0f)) {
+                    sprite->transform->position[0] += 0.0f;
+                    sprite->transform->position[1] += 1.0f;
+                    sprite->transform->position[2] += 0.0f;
+                    sprite->transform->model[3][0] += 0.0f;
+                    sprite->transform->model[3][1] += 1.0f;
+                    sprite->transform->model[3][2] += 0.0f;
+                }
+                if ((sprite->transform->rotation[2] < 180.0f && sprite->transform->rotation[2] >= 90.0f) || (sprite->transform->rotation[2] >= -270.0f && sprite->transform->rotation[2] < -180.0f)) {
+                    sprite->transform->position[0] += -1.0f;
+                    sprite->transform->position[1] += 0.0f;
+                    sprite->transform->position[2] += 0.0f;
+                    sprite->transform->model[3][0] += -1.0f;
+                    sprite->transform->model[3][1] += 0.0f;
+                    sprite->transform->model[3][2] += 0.0f;
+                }
+                if ((sprite->transform->rotation[2] < 270.0f && sprite->transform->rotation[2] >= 180.0f) || (sprite->transform->rotation[2] >= -180.0f && sprite->transform->rotation[2] < -90.0f)) {
+                    sprite->transform->position[0] += 0.0f;
+                    sprite->transform->position[1] += -1.0f;
+                    sprite->transform->position[2] += 0.0f;
+                    sprite->transform->model[3][0] += 0.0f;
+                    sprite->transform->model[3][1] += -1.0f;
+                    sprite->transform->model[3][2] += 0.0f;
+                }
+                if ((sprite->transform->rotation[2] < 360.0f && sprite->transform->rotation[2] >= 270.0f) || (sprite->transform->rotation[2] >= -90.0f && sprite->transform->rotation[2] < 0.0f)) {
+                    sprite->transform->position[0] += 1.0f;
+                    sprite->transform->position[1] += 0.0f;
+                    sprite->transform->position[2] += 0.0f;
+                    sprite->transform->model[3][0] += 1.0f;
+                    sprite->transform->model[3][1] += 0.0f;
+                    sprite->transform->model[3][2] += 0.0f;
+                }
+
+                return;
+            }
+        }
+    }
+
     struct EZTransform *transform = ezGetSpriteTransform(sprite);
 
     switch (mode) {
         case EZ_LOCAL_REF:
                   /* adjusting pos */
             if (xyz[0] == 0.0f) { /* The movement is relative to the up axis which is relative to the sprite itself */
-                printf("(x: %f, y: %f)\n", xyz[1] * sin(glm_rad(sprite->transform->rotation[2])), xyz[1] * cos(glm_rad(sprite->transform->rotation[2])));
                 transform->position[0] += -1.0f * xyz[1] * sin(glm_rad(sprite->transform->rotation[2]));
                 transform->position[1] += xyz[1] * cos(glm_rad(sprite->transform->rotation[2]));
 
@@ -418,6 +468,10 @@ void ezMakeSpriteActive(struct EZSprite *sprite) {
     sprite->active = 1;
 }
 
+void ezSetSpriteMoveable(struct EZSprite *sprite, int value) {
+    sprite->moveable = value;
+}
+
 void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script) {
     ezVectorPushBack(sprite->script_manager->scripts, (void *) script);
 }
@@ -439,7 +493,9 @@ void ezUpdateSprite(const struct EZSprite *sprite) {
 }
 
 int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2) {
-    return ezCheckAabbCollision(s1->hitbox, s2->hitbox);
+    if (!s1->go && !s2->go)
+        return ezCheckAabbCollision(s1->hitbox, s2->hitbox);
+    return 0;
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {

@@ -9,8 +9,15 @@
 extern "C" {
 #endif
 
-typedef struct EZScene EZScene;
+#include "stl/vector.h"
 
+struct EZScene {
+    struct EZCamera *cam;
+    /* renderer */
+    struct EZSprite *def_spr;
+    /* gameobject vector */
+    EZVector *vec;
+};
 #define EZ_CAMERA 0
 #define EZ_RENDERER 1
 #define EZ_S_GAMEOBJECT 2

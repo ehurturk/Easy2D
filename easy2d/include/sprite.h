@@ -51,6 +51,7 @@ int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2)
 
 void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
 void ezMakeSpriteActive(struct EZSprite *sprite);
+void ezSetSpriteMoveable(struct EZSprite *sprite, int value);
 
 /* a bridge to actual code */
 void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script);
