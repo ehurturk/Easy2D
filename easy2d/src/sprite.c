@@ -319,12 +319,24 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
     switch (mode) {
         case EZ_LOCAL_REF:
                   /* adjusting pos */
-            transform->position[0] += xyz[0];
-            transform->position[1] += xyz[1];
+            if (xyz[0] == 0.0f) { /* The movement is relative to the up axis which is relative to the sprite itself */
+                printf("(x: %f, y: %f)\n", xyz[1] * sin(glm_rad(sprite->transform->rotation[2])), xyz[1] * cos(glm_rad(sprite->transform->rotation[2])));
+                transform->position[0] += -1.0f * xyz[1] * sin(glm_rad(sprite->transform->rotation[2]));
+                transform->position[1] += xyz[1] * cos(glm_rad(sprite->transform->rotation[2]));
+
+                transform->model[3][0] += -1.0f * xyz[1] * sin(glm_rad(sprite->transform->rotation[2]));
+                transform->model[3][1] += xyz[1] * cos(glm_rad(sprite->transform->rotation[2]));
+            }
+
+            if (xyz[1] == 0.0f) { /* the movement is relative to the right axis which is relative to the sprite itself */
+                transform->position[0] += xyz[0] * cos(glm_rad(sprite->transform->rotation[2]));
+                transform->position[1] += xyz[0] * sin(glm_rad(sprite->transform->rotation[2]));
+
+                transform->model[3][0] += xyz[0] * cos(glm_rad(sprite->transform->rotation[2]));
+                transform->model[3][1] += xyz[0] * sin(glm_rad(sprite->transform->rotation[2]));
+            }
+
             transform->position[2] += xyz[2];
-                    /* translation */
-            transform->model[3][0] += xyz[0];
-            transform->model[3][1] += xyz[1];
             transform->model[3][2] += xyz[2];
             break;
         case EZ_WORLD_REF:
