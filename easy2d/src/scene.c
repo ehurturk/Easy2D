@@ -42,28 +42,10 @@ void ezStartScene() {
 void ezUpdateScene() {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
-        if (ezIsSpriteActive(sprite))
+        if (ezIsSpriteActive(sprite)) {
             ezUpdateSprite(sprite);
+        }
     }
-//    /* check collisions */
-//    for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
-//        for (int j = i; j < ezVectorTotal(scene->vec); j++) {
-//            struct EZSprite *s1 = ezVectorGet(scene->vec, i);
-//            struct EZSprite *s2 = ezVectorGet(scene->vec, j);
-//            if (ezCheckSpriteCollision(s1, s2) && i != j) {
-//                /* move = false */
-//                printf("MAKE MOVE FALSE!\n");
-//                ezSetSpriteMoveable(s1, 0);
-//                ezSetSpriteMoveable(s2, 0);
-//            }
-////            else {
-////                /* move = true */
-////                printf("MAKE MOVE NOT FALSE!\n");
-////                ezSetSpriteMoveable(s1, 1);
-////                ezSetSpriteMoveable(s2, 1);
-////            }
-//        }
-//    }
 }
 
 void ezAddToScene(void *comp, int type) {
@@ -112,7 +94,6 @@ void *ezFindSpriteWithName(const char *name) {
 }
 
 void ezInstantiateSprite(const void *comp, float x, float y) {
-
     ezAddToScene(comp, EZ_GAMEOBJS);
     ezSetSpritePosition((struct EZSprite *) comp, x, y);
 }
@@ -123,6 +104,7 @@ void ezDestroyScene() {
     for (int i = 0; i < ezVectorTotal(vec); i++) {
         ezReleaseSprite((struct EZSprite *) ezVectorGet(vec, i));
     }
+
     ezVectorFree(scene->vec);
     free(scene->vec);
     free(scene);

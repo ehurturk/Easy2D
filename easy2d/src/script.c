@@ -22,7 +22,7 @@ void ezStartScripts(const struct EZScriptManager *manager) {
 void ezUpdateScripts(const struct EZScriptManager *manager) {
     for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
         struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
-        script->update(manager->parent);
+        script->update(manager->parent); /* PROBLEM HERE, MANAGER->PARENT IS NOT SET */
     }
 }
 

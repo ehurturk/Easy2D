@@ -32,7 +32,8 @@ struct EZScript *name;             \
 void init##name() {                 \
     (name) = (struct EZScript *)malloc(sizeof(struct EZScript));                                \
     (name)->start = start;            \
-    (name)->update = update;          \
+    (name)->update = update;        \
+    (name)->destroy = destroy;                                    \
 }
 
 /* This must be called inside your driver file (i.e main.cpp or main.c) to ensure that the scripts are initialized and their corresponding functions will be called */

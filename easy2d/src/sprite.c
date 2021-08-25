@@ -222,6 +222,7 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
 
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
+    buff->script_manager->parent = buff;
 
     ez_vector_init(buff->script_manager->scripts);
 
@@ -326,7 +327,7 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *spr = ezVectorGet(scene->vec, i);
         if (spr != sprite) {
-            if (ezCheckSpriteCollision(sprite, spr)) {
+            if (ezCheckSpriteCollision(sprite, spr)) { /* collision resolution, i guess? */
                 if ((sprite->transform->rotation[2] < 90.0f && sprite->transform->rotation[2] >= 0.0f) || (sprite->transform->rotation[2] > -360.0f && sprite->transform->rotation[2] < -270.0f)) {
                     sprite->transform->position[0] += 0.0f;
                     sprite->transform->position[1] += 1.0f;
@@ -567,6 +568,7 @@ void ezReleaseSprite(struct EZSprite *sprite) {
     free(sprite->transform);
     if (sprite->hitbox != NULL)
         free(sprite->hitbox);
+    ezDestroyScripts(sprite->script_manager);
     ezDeleteManager(sprite->script_manager);
     free(sprite);
 }
