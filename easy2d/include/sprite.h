@@ -50,8 +50,11 @@ void ezUpdateSprite(const struct EZSprite *sprite);
 int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2);
 
 void ezSetSpritePosition(struct EZSprite *sprite, float x, float y);
+void ezSetSpriteRotation(struct EZSprite *sprite, float deg);
 void ezMakeSpriteActive(struct EZSprite *sprite);
 void ezSetSpriteMoveable(struct EZSprite *sprite, int value);
+
+void ezSetSpriteCollisionAsTrigger(struct EZSprite *sprite);
 
 /* a bridge to actual code */
 void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script);

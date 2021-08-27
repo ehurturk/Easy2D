@@ -13,6 +13,7 @@ extern "C" {
 struct EZAabbBoundingBox {
     float w, h;
     float x, y;
+    int trigger;
 };
 
 int ezCheckAabbCollision(struct EZAabbBoundingBox *b1, struct EZAabbBoundingBox *b2);

@@ -465,6 +465,13 @@ void ezSetSpritePosition(struct EZSprite *sprite, float x, float y) {
 //    glm_translate(transform->model, t); HAS FUCKING ISSUE
 }
 
+void ezSetSpriteRotation(struct EZSprite *sprite, float deg) {
+    struct EZTransform *transform = ezGetSpriteTransform(sprite);
+
+    float angle = deg - transform->rotation[2];
+    ezRotateSprite(sprite, angle);
+}
+
 void ezMakeSpriteActive(struct EZSprite *sprite) {
     sprite->active = 1;
 }
@@ -497,6 +504,10 @@ int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2)
     if (!s1->go && !s2->go)
         return ezCheckAabbCollision(s1->hitbox, s2->hitbox);
     return 0;
+}
+
+void ezSetSpriteCollisionAsTrigger(struct EZSprite *sprite) {
+    sprite->hitbox->trigger = 1;
 }
 
 inline struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite) {
