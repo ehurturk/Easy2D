@@ -5,7 +5,7 @@
 #ifndef EASY2D_LOG_H
 #define EASY2D_LOG_H
 
-#define EZ_DEBUG_ENABLED /* TODO: Undef this */
+//#define EZ_DEBUG_ENABLED /* TODO: Undef this */
 
 #include <stdio.h>
 #include <string.h>
@@ -79,6 +79,7 @@
 #define EZ_DEBUGCF(color, fmtStr, ...)
 #define EZ_DEBUG_RAW(fmtStr)
 #define EZ_DEBUGC_RAW(fmtStr)
+#define EZ_DEBUGC(fmtstr)
 #define EZ_DEBUGF_RAW(fmtStr, ...)
 #define EZ_DEBUGCF_RAW(fmtStr, ...)
 #define EZ_ERRORF_RAW(fmtStr, ...)

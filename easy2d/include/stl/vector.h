@@ -35,6 +35,7 @@ int ezVectorResize(EZVector *v, int capacity);
 int ezVectorPushBack(EZVector *v, void *item);
 int ezVectorSet(EZVector *v, int index, void *item);
 void *ezVectorGet(EZVector *v, int index);
+int ezVectorIndexOf(EZVector *v, void *item);
 int ezVectorDelete(EZVector *v, int index);
 int ezVectorFree(EZVector *v);
 void ez_vector_init(EZVector *v);

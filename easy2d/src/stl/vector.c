@@ -1,7 +1,6 @@
 //
 // Created by Emir Hürtürk on 10.08.2021.
 //
-
 #include "stl/vector.h"
 
 int ezVectorTotal(EZVector *v)
@@ -97,6 +96,16 @@ int ezVectorDelete(EZVector *v, int index)
     }
     return status;
 }
+
+int ezVectorIndexOf(EZVector *v, void *item) {
+    for (int i = 0; i < ezVectorTotal(v); i++) {
+        if (ezVectorGet(v, i) == item) {
+            return i;
+        }
+    }
+    return -1;
+}
+
 int ezVectorFree(EZVector *v)
 {
     int  status = V_UNDEFINED;

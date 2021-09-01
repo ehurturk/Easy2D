@@ -27,7 +27,7 @@ void ezCreateScene();
 
 void ezAddToScene(void *comp, int type);
 void *ezGetSceneComponent(int type);
-void ezInstantiateSprite(const void *comp, float x, float y);
+void ezInstantiateSprite(const void *comp, float x, float y, float angle_d);
 void ezStartScene();
 void ezUpdateScene();
 void *ezFindSpriteWithName(const char *name);

@@ -4,6 +4,8 @@
 
 #include "input.h"
 #include "application.h"
+#include "scene.h"
+#include "sprite.h"
 #include <stdio.h>
 
 struct EZInputManager {
@@ -29,8 +31,14 @@ void ezBindMouseButtonInputFunc(EZMouseButtonInputFunc func) {
 
 /* Non-API Function that registers the glfw input callback - needs window */
 void ezGLFWKeyInputCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (manager.kfunc != NULL)
-        manager.kfunc(key, action);
+    extern struct EZScene *scene;
+    for (int i = 0; i< ezVectorTotal(scene->vec); i++)
+    {
+        struct EZSprite *spr = ezVectorGet(scene->vec, i);
+        ezUpdateSpriteInput(spr, key, action);
+    }
+//    if (manager.kfunc != NULL)
+//        manager.kfunc(key, action);
 }
 
 void ezGLFWMouseInputCallback(GLFWwindow *window, double xpos, double ypos) {

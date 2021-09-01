@@ -46,6 +46,7 @@ void ezRotateSprite(struct EZSprite *sprite, float angle_d);
 void ezInitSprite(const struct EZSprite *sprite);
 void ezStartSprite(const struct EZSprite *sprite);
 void ezUpdateSprite(const struct EZSprite *sprite);
+void ezUpdateSpriteInput(const struct EZSprite *sprite, int key, int action);
 
 int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2);
 
@@ -58,6 +59,8 @@ void ezSetSpriteCollisionAsTrigger(struct EZSprite *sprite);
 
 /* a bridge to actual code */
 void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script);
+
+void ezDestroySprite(struct EZSprite *sprite);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);

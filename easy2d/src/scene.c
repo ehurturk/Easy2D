@@ -42,8 +42,10 @@ void ezStartScene() {
 void ezUpdateScene() {
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *sprite = (struct EZSprite *) ezVectorGet(scene->vec, i);
-        if (ezIsSpriteActive(sprite)) {
-            ezUpdateSprite(sprite);
+        if (sprite != NULL) {
+            if (ezIsSpriteActive(sprite)) {
+                ezUpdateSprite(sprite);
+            }
         }
     }
 }
@@ -93,9 +95,12 @@ void *ezFindSpriteWithName(const char *name) {
     return NULL;
 }
 
-void ezInstantiateSprite(const void *comp, float x, float y) {
+void ezInstantiateSprite(const void *comp, float x, float y, float angle_d) {
+    ezStartSprite((struct EZSprite *)comp);
+    ezInitSprite((struct EZSprite *) comp);
     ezAddToScene(comp, EZ_GAMEOBJS);
     ezSetSpritePosition((struct EZSprite *) comp, x, y);
+    ezSetSpriteRotation((struct EZSprite *) comp, angle_d);
 }
 
 void ezDestroyScene() {

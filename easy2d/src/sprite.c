@@ -493,11 +493,22 @@ void ezStartSprite(const struct EZSprite *sprite) {
 }
 
 void ezUpdateSprite(const struct EZSprite *sprite) {
-    ezUpdateScripts(sprite->script_manager);
+    ezUpdateScripts(sprite->script_manager); /* SEG FAULT */
     if (sprite->hitbox != NULL) {
         sprite->hitbox->x = ezGetSpriteTransform(sprite)->position[0];
         sprite->hitbox->y = ezGetSpriteTransform(sprite)->position[1];
     }
+}
+
+void ezUpdateSpriteInput(const struct EZSprite *sprite, int key, int action) {
+    ezCallInputScripts(sprite->script_manager, key, action);
+}
+
+void ezDestroySprite(struct EZSprite *sprite) {
+    extern struct EZScene *scene;
+    ezVectorDelete(scene->vec, ezVectorIndexOf(scene->vec, sprite));
+    sprite->active = 0;
+    ezReleaseSprite(sprite);
 }
 
 int ezCheckSpriteCollision(const struct EZSprite *s1, const struct EZSprite *s2) {
@@ -569,7 +580,7 @@ float ezGetSpriteWidth(const struct EZSprite *s) { return s->w; }
 float ezGetSpriteHeight(const struct EZSprite *s) { return s->h; }
 
 void ezReleaseSprite(struct EZSprite *sprite) {
-    EZ_DEBUGC(EZ_COLOR_YELLOW "Releasing a sprite...\n");
+    EZ_DEBUGCF(EZ_COLOR_YELLOW "Releasing sprite %s...\n", ezGetSpriteName(sprite));
     if (sprite->shader != NULL)
         ezReleaseShader(sprite->shader);
     if (sprite->textures != NULL) {

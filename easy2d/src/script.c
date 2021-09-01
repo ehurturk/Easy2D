@@ -20,10 +20,13 @@ void ezStartScripts(const struct EZScriptManager *manager) {
 }
 
 void ezUpdateScripts(const struct EZScriptManager *manager) {
+//    printf("hmm - started\n");
     for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
         struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
-        script->update(manager->parent); /* PROBLEM HERE, MANAGER->PARENT IS NOT SET */
+        if (script != NULL)
+            script->update(manager->parent);
     }
+//    printf("hmm - finished\n");
 }
 
 void ezDestroyScripts(const struct EZScriptManager *manager) {
@@ -33,6 +36,12 @@ void ezDestroyScripts(const struct EZScriptManager *manager) {
     }
 }
 
+void ezCallInputScripts(const struct EZScriptManager *manager, int key, int action) {
+    for (int i = 0; i < ezVectorTotal(manager->scripts); i++) {
+        struct EZScript *script = (struct EZScript *) ezVectorGet(manager->scripts, i);
+        script->key_input(key, action);
+    }
+}
 
 void ezDeleteManager(struct EZScriptManager *manager) {
     ezVectorFree(manager->scripts);

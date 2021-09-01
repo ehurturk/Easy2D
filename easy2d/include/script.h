@@ -19,6 +19,8 @@ struct EZScript {
     void (*update)(struct EZSprite *sprite);
     void (*start)(struct EZSprite *sprite);
     void (*destroy)(struct EZSprite *sprite);
+
+    void (*key_input)(int key, int action);
 };
 
 struct EZScriptManager {
@@ -27,13 +29,14 @@ struct EZScriptManager {
 };
 
 /* This must be called inside the additional script. */
-#define EZ_INIT_SCRIPT(name)        \
+#define EZ_INIT_SCRIPT(name, startfn, updatefn, destroyfn, keyfn)        \
 struct EZScript *name;             \
 void init##name() {                 \
     (name) = (struct EZScript *)malloc(sizeof(struct EZScript));                                \
-    (name)->start = start;            \
-    (name)->update = update;        \
-    (name)->destroy = destroy;                                    \
+    (name)->start = startfn;            \
+    (name)->update = updatefn;        \
+    (name)->destroy = destroyfn;      \
+    (name)->key_input = keyfn;                                \
 }
 
 /* This must be called inside your driver file (i.e main.cpp or main.c) to ensure that the scripts are initialized and their corresponding functions will be called */
@@ -46,6 +49,7 @@ void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manage
 
 void ezStartScripts(const struct EZScriptManager *manager);
 void ezUpdateScripts(const struct EZScriptManager *manager);
+void ezCallInputScripts(const struct EZScriptManager *manager, int key, int action);
 void ezDestroyScripts(const struct EZScriptManager *manager);
 
 void ezDeleteManager(struct EZScriptManager *manager);
