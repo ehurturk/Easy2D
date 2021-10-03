@@ -46,6 +46,7 @@ void ezUpdateScene() {
             if (ezIsSpriteActive(sprite)) {
                 ezUpdateSprite(sprite);
             }
+
         }
     }
 }

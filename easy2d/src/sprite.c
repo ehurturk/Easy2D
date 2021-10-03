@@ -593,4 +593,6 @@ void ezReleaseSprite(struct EZSprite *sprite) {
     ezDestroyScripts(sprite->script_manager);
     ezDeleteManager(sprite->script_manager);
     free(sprite);
+    EZ_DEBUGCF(EZ_COLOR_YELLOW "Sprite %s is released...\n", ezGetSpriteName(sprite));
+    sprite = NULL;
 }

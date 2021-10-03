@@ -5,7 +5,7 @@
 #ifndef EASY2D_LOG_H
 #define EASY2D_LOG_H
 
-//#define EZ_DEBUG_ENABLED /* TODO: Undef this */
+#define EZ_DEBUG_ENABLED /* TODO: Undef this */
 
 #include <stdio.h>
 #include <string.h>
