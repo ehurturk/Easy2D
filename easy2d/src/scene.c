@@ -18,7 +18,7 @@ void ezCreateScene() {
         return;
     }
 
-    scene = malloc(sizeof(struct EZScene));
+    scene      = malloc(sizeof(struct EZScene));
     scene->cam = NULL;
     scene->vec = malloc(sizeof(EZVector));
     ez_vector_init(scene->vec);
@@ -46,7 +46,6 @@ void ezUpdateScene() {
             if (ezIsSpriteActive(sprite)) {
                 ezUpdateSprite(sprite);
             }
-
         }
     }
 }
@@ -97,7 +96,7 @@ void *ezFindSpriteWithName(const char *name) {
 }
 
 void ezInstantiateSprite(const void *comp, float x, float y, float angle_d) {
-    ezStartSprite((struct EZSprite *)comp);
+    ezStartSprite((struct EZSprite *) comp);
     ezInitSprite((struct EZSprite *) comp);
     ezAddToScene(comp, EZ_GAMEOBJS);
     ezSetSpritePosition((struct EZSprite *) comp, x, y);

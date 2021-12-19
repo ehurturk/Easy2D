@@ -8,6 +8,7 @@ if sudo make ; then
   echo "\033[1;32m[Easy2D]: Successfully compiled scripts...\033[0m"
 else
   echo "\033[1;31m[Easy2D]: An error occurred when compiling scripts...\033[0m"
+  exit 1
 fi
 
 echo "[Easy2D]: Installing the library into system..."
@@ -16,6 +17,7 @@ if sudo make install ; then
   echo "\033[1;32m[Easy2D]: Successfully installed library to the system...\033[0m"
 else
   echo "\033[1;31m[Easy2D]: An error occurred when installing the library...\033[0m"
+  exit 1
 fi
 
 echo "Now that Easy2D library and the header files are installed in your system, you can just use them!"
@@ -33,4 +35,3 @@ cat << EOF
             add_executable(Easy2DSandbox main.cpp)
             target_link_libraries(${CMAKE_PROJECT_NAME} PUBLIC ${Easy2DLIB})
 EOF
-

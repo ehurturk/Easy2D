@@ -41,7 +41,7 @@ int ezVectorFree(EZVector *v);
 void ez_vector_init(EZVector *v);
 
 #ifdef __cplusplus
-};
+}
 #endif
 
 #endif//EASY2D_VECTOR_H

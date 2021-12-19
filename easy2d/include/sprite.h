@@ -57,10 +57,8 @@ void ezSetSpriteMoveable(struct EZSprite *sprite, int value);
 
 void ezSetSpriteCollisionAsTrigger(struct EZSprite *sprite);
 
-/* a bridge to actual code */
-void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script);
-
 void ezDestroySprite(struct EZSprite *sprite);
+void ezSpriteAddScript(struct EZSprite *sprite, const char *name);
 
 /* Getters - Since structs (besides EZApplication) are opaque types */
 struct EZShader *ezGetSpriteShader(const struct EZSprite *sprite);

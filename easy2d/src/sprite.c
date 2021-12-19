@@ -480,20 +480,22 @@ void ezSetSpriteMoveable(struct EZSprite *sprite, int value) {
     sprite->moveable = value;
 }
 
-void ezSpriteAddScript(struct EZSprite *sprite, struct EZScript *script) {
-    ezVectorPushBack(sprite->script_manager->scripts, (void *) script);
-}
-
 void ezInitSprite(const struct EZSprite *sprite) {
     ezInitScriptManager(sprite, sprite->script_manager);
 }
 
 void ezStartSprite(const struct EZSprite *sprite) {
-    ezStartScripts(sprite->script_manager);
+//    ezStartScripts(sprite->script_manager);
+}
+
+/* Add a script to a sprite using the script's name. */
+void ezSpriteAddScript(struct EZSprite *sprite, const char *name) {
+    ezScriptAddScriptName(sprite->script_manager, name);
 }
 
 void ezUpdateSprite(const struct EZSprite *sprite) {
-    ezUpdateScripts(sprite->script_manager); /* SEG FAULT */
+    ezUpdatePlugins(sprite->script_manager); /* SEG FAULT */
+
     if (sprite->hitbox != NULL) {
         sprite->hitbox->x = ezGetSpriteTransform(sprite)->position[0];
         sprite->hitbox->y = ezGetSpriteTransform(sprite)->position[1];
@@ -501,7 +503,7 @@ void ezUpdateSprite(const struct EZSprite *sprite) {
 }
 
 void ezUpdateSpriteInput(const struct EZSprite *sprite, int key, int action) {
-    ezCallInputScripts(sprite->script_manager, key, action);
+//    ezCallInputScripts(sprite->script_manager, key, action);
 }
 
 void ezDestroySprite(struct EZSprite *sprite) {
@@ -590,7 +592,6 @@ void ezReleaseSprite(struct EZSprite *sprite) {
     free(sprite->transform);
     if (sprite->hitbox != NULL)
         free(sprite->hitbox);
-    ezDestroyScripts(sprite->script_manager);
     ezDeleteManager(sprite->script_manager);
     free(sprite);
     EZ_DEBUGCF(EZ_COLOR_YELLOW "Sprite %s is released...\n", ezGetSpriteName(sprite));

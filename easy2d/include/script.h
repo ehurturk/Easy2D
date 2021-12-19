@@ -10,17 +10,29 @@ extern "C" {
 #endif
 
 #include "stl/vector.h"
+#include <stdint.h>
+#include <sys/stat.h>
 
 #define CC "gcc"
 
 struct EZSprite;
 
-struct EZScript {
-    void (*update)(struct EZSprite *sprite);
-    void (*start)(struct EZSprite *sprite);
-    void (*destroy)(struct EZSprite *sprite);
+typedef size_t (*get_instance_size_func)();
+typedef void (*on_plugin_reload_func)(void *ptr, struct EZSprite *parent);
+typedef void (*on_plugin_update_func)();
 
-    void (*key_input)(int key, int action);
+struct EZScript {
+    void *dll_handle;
+    void *instance;
+    const char *w_lib_path, *s_lib_path;
+    uint64_t lib_mod_time;
+    size_t instance_size;
+    const char *name;
+    struct stat lib_stat;
+
+    get_instance_size_func get_instance_size;
+    on_plugin_reload_func on_plugin_reload; /* start function */
+    on_plugin_update_func on_plugin_update; /* update function */
 };
 
 struct EZScriptManager {
@@ -28,29 +40,16 @@ struct EZScriptManager {
     EZVector *scripts;
 };
 
-/* This must be called inside the additional script. */
-#define EZ_INIT_SCRIPT(name, startfn, updatefn, destroyfn, keyfn)        \
-struct EZScript *name;             \
-void init##name() {                 \
-    (name) = (struct EZScript *)malloc(sizeof(struct EZScript));                                \
-    (name)->start = startfn;            \
-    (name)->update = updatefn;        \
-    (name)->destroy = destroyfn;      \
-    (name)->key_input = keyfn;                                \
-}
-
-/* This must be called inside your driver file (i.e main.cpp or main.c) to ensure that the scripts are initialized and their corresponding functions will be called */
-#define EZ_INITIALIZE_SCRIPT(name) init##name();
-
 typedef struct EZScriptManager EZScriptManager;
 typedef struct EZScript EZScript;
 
 void ezInitScriptManager(struct EZSprite *parent, struct EZScriptManager *manager);
 
-void ezStartScripts(const struct EZScriptManager *manager);
-void ezUpdateScripts(const struct EZScriptManager *manager);
-void ezCallInputScripts(const struct EZScriptManager *manager, int key, int action);
-void ezDestroyScripts(const struct EZScriptManager *manager);
+void ezLoadPluginFunctions(struct EZScriptManager *manager);
+void ezCopyPluginLibraries(struct EZScriptManager *manager);
+void ezUpdatePlugins(struct EZScriptManager *manager);
+
+void ezScriptAddScriptName(struct EZScriptManager *manager, const char *name);
 
 void ezDeleteManager(struct EZScriptManager *manager);
 
