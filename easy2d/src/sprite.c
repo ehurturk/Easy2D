@@ -222,9 +222,11 @@ struct EZSprite *ezSquareSprite(const char *name, float x, float y, float z, flo
 
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
+    buff->script_manager->names = malloc(sizeof(EZVector));
     buff->script_manager->parent = buff;
 
     ez_vector_init(buff->script_manager->scripts);
+    ez_vector_init(buff->script_manager->names);
 
 //    ezInitScriptManager(buff, buff->script_manager);
     buff->active = 1;
@@ -279,8 +281,10 @@ struct EZSprite *ezCreateGameObject(const char *name, float x, float y, float z)
 
     buff->script_manager = malloc(sizeof(struct EZScriptManager));
     buff->script_manager->scripts = malloc(sizeof(EZVector));
+    buff->script_manager->names = malloc(sizeof(EZVector));
 
     ez_vector_init(buff->script_manager->scripts);
+    ez_vector_init(buff->script_manager->names);
 
     buff->active = 1;
     buff->go = 1;

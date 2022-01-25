@@ -9,6 +9,7 @@
 #include <stdlib.h>
 
 
+
 int active_scene = 0;
 struct EZScene *scene;
 

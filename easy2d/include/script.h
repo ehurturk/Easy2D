@@ -37,7 +37,8 @@ struct EZScript {
 
 struct EZScriptManager {
     struct EZSprite *parent;
-    EZVector *scripts;
+    EZVector *scripts; // script objects
+    EZVector *names; // script names for filtering
 };
 
 typedef struct EZScriptManager EZScriptManager;
