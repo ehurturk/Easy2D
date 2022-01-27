@@ -75,7 +75,6 @@ void ezUpdatePlugins(struct EZScriptManager *manager) {
 
                 ezCopyPluginLibraries(manager);
                 ezLoadPluginFunctions(manager);
-
                 size_t new_size = plug->get_instance_size();
 
                 if (new_size != plug->instance_size) {
@@ -92,7 +91,7 @@ void ezUpdatePlugins(struct EZScriptManager *manager) {
             }
 
         }
-        plug->on_plugin_update();
+        plug->on_plugin_update(plug->instance);
     }
 }
 

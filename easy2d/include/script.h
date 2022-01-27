@@ -19,7 +19,7 @@ struct EZSprite;
 
 typedef size_t (*get_instance_size_func)();
 typedef void (*on_plugin_reload_func)(void *ptr, struct EZSprite *parent);
-typedef void (*on_plugin_update_func)();
+typedef void (*on_plugin_update_func)(void *instance);
 
 struct EZScript {
     void *dll_handle;
