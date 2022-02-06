@@ -12,6 +12,7 @@ int ezCheckAabbCollision(struct EZAabbBoundingBox *b1, struct EZAabbBoundingBox 
             b1->y <= b2->y + b2->h &&
             b1->y + b1->h >= b2->y) {
             // collision detected!
+            printf("collision\n");
             return 1;
         }
     }

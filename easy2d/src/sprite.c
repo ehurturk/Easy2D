@@ -330,37 +330,37 @@ void ezTranslateSprite(struct EZSprite *sprite, vec3 xyz, int mode) {
     extern struct EZScene *scene;
     for (int i = 0; i < ezVectorTotal(scene->vec); i++) {
         struct EZSprite *spr = ezVectorGet(scene->vec, i);
-        if (spr != sprite) {
+        if (spr != sprite) { /* avoid colliding with itself */
             if (ezCheckSpriteCollision(sprite, spr)) { /* collision resolution, i guess? */
                 if ((sprite->transform->rotation[2] < 90.0f && sprite->transform->rotation[2] >= 0.0f) || (sprite->transform->rotation[2] > -360.0f && sprite->transform->rotation[2] < -270.0f)) {
                     sprite->transform->position[0] += 0.0f;
-                    sprite->transform->position[1] += 1.0f;
+                    sprite->transform->position[1] += 2.0f;
                     sprite->transform->position[2] += 0.0f;
                     sprite->transform->model[3][0] += 0.0f;
-                    sprite->transform->model[3][1] += 1.0f;
+                    sprite->transform->model[3][1] += 2.0f;
                     sprite->transform->model[3][2] += 0.0f;
                 }
                 if ((sprite->transform->rotation[2] < 180.0f && sprite->transform->rotation[2] >= 90.0f) || (sprite->transform->rotation[2] >= -270.0f && sprite->transform->rotation[2] < -180.0f)) {
-                    sprite->transform->position[0] += -1.0f;
+                    sprite->transform->position[0] += -2.0f;
                     sprite->transform->position[1] += 0.0f;
                     sprite->transform->position[2] += 0.0f;
-                    sprite->transform->model[3][0] += -1.0f;
+                    sprite->transform->model[3][0] += -2.0f;
                     sprite->transform->model[3][1] += 0.0f;
                     sprite->transform->model[3][2] += 0.0f;
                 }
                 if ((sprite->transform->rotation[2] < 270.0f && sprite->transform->rotation[2] >= 180.0f) || (sprite->transform->rotation[2] >= -180.0f && sprite->transform->rotation[2] < -90.0f)) {
                     sprite->transform->position[0] += 0.0f;
-                    sprite->transform->position[1] += -1.0f;
+                    sprite->transform->position[1] += -2.0f;
                     sprite->transform->position[2] += 0.0f;
                     sprite->transform->model[3][0] += 0.0f;
-                    sprite->transform->model[3][1] += -1.0f;
+                    sprite->transform->model[3][1] += -2.0f;
                     sprite->transform->model[3][2] += 0.0f;
                 }
                 if ((sprite->transform->rotation[2] < 360.0f && sprite->transform->rotation[2] >= 270.0f) || (sprite->transform->rotation[2] >= -90.0f && sprite->transform->rotation[2] < 0.0f)) {
-                    sprite->transform->position[0] += 1.0f;
+                    sprite->transform->position[0] += 2.0f;
                     sprite->transform->position[1] += 0.0f;
                     sprite->transform->position[2] += 0.0f;
-                    sprite->transform->model[3][0] += 1.0f;
+                    sprite->transform->model[3][0] += 2.0f;
                     sprite->transform->model[3][1] += 0.0f;
                     sprite->transform->model[3][2] += 0.0f;
                 }
